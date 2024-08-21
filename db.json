@@ -1,0 +1,11 @@
+{
+    "assets": [
+        {
+            "asset_id": 1,
+            "asset_name": "hi",
+            "asset_category_id": 1,
+            "asset_type": "Video",
+            "asset_url": "hi"
+        }
+    ]
+}
