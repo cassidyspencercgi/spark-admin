@@ -16,7 +16,7 @@ import { AssetService } from '../assets.service';
 export class ManageAssetComponent {
   assetService: AssetService = inject(AssetService);
   assetsList: Asset[] = [];
-  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type', 'asset_url'];
+  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url'];
   route: ActivatedRoute = inject(ActivatedRoute);
   dataSource = new MatTableDataSource();
 

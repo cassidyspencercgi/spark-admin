@@ -6,7 +6,7 @@ import { ManageAssetComponent } from './manage-asset/manage-asset.component';
 
 export const routes: Routes = [
     {
-        path : '',
+        path : 'home',
         component : HomeComponent,
         children: [
         {   path: 'assets', 
@@ -20,7 +20,7 @@ export const routes: Routes = [
     },
     {
         path : '',
-        redirectTo : 'assets',
+        redirectTo : 'home/assets',
         pathMatch : 'full'
     }
 ];

@@ -4,7 +4,7 @@
             "asset_id": 1,
             "asset_name": "hi",
             "asset_category_id": 1,
-            "asset_type": "Video",
+            "asset_type_id": 1,
             "asset_url": "hi"
         }
     ]
