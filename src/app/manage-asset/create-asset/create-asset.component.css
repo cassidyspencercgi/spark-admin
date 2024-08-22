@@ -1,0 +1,25 @@
+* {
+    padding: 5px 20px;
+}
+
+button {
+    margin: 20px;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Space between form fields */
+    width: 100%; /* Allows section to use available width but constrained by max-width */
+    max-width: 300px; /* Adjust this value based on your desired max width */
+}
+
+mat-form-field {
+    width: 100%; /* Ensure form fields take full width of the section */
+}
