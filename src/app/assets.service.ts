@@ -6,12 +6,12 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
     providedIn: 'root'
 })
 export class AssetService {
-    baseurl = 'http://localhost:8000/autismapp/asset/v1/'
-    token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdXNlcl9pZCI6MSwiZXhwIjoxNzI0MzM2NzcyfQ.kn6AH3uZzGgjtkcVsdg6fd5yHQXUdpbq2lmAzd76b7M'
+    baseurl = 'http://localhost:8000/autismapp'
+    token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfdXNlcl9pZCI6MSwiZXhwIjoxNzI0MzQwMjgxfQ.3KboFMQgixUwtccwZWcgqYJfvbyvWO1W6QUce84guJc'
     constructor() {}
 
     async getAssets() : Promise<Asset[]> {
-        const data = await fetch(this.baseurl,
+        const data = await fetch(this.baseurl + "/asset/v1",
             {
             method: 'GET',
             headers: {

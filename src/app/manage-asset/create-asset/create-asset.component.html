@@ -1,0 +1,41 @@
+<h1>Add New Asset</h1>
+
+<form [formGroup]="addAssetForm" (ngSubmit)="submitAsset()">
+    <section>
+        <mat-form-field>
+            <mat-label>Asset Name</mat-label>
+            <input name="name" required matInput formControlName="name">
+            <mat-error *ngIf="addAssetForm.get('name')?.invalid && addAssetForm.get('name')?.touched">
+                Asset name is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Asset Category</mat-label>
+            <input category="asset_category" required matInput formControlName="asset_category">
+            <mat-error *ngIf="addAssetForm.get('asset_category')?.invalid && addAssetForm.get('asset_category')?.touched">
+                Asset type is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Asset Type</mat-label>
+            <input type="asset_type" required matInput formControlName="asset_type">
+            <mat-error *ngIf="addAssetForm.get('asset_type')?.invalid && addAssetForm.get('asset_type')?.touched">
+                Asset type is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Asset Url</mat-label>
+            <input type="asset_url" required matInput formControlName="asset_url">
+            <mat-error *ngIf="addAssetForm.get('asset_url')?.invalid && addAssetForm.get('asset_url')?.touched">
+                Asset type is required.
+              </mat-error>
+        </mat-form-field>
+
+    </section>
+
+    <button mat-stroked-button type="submit">Save</button>
+    <button mat-stroked-button [routerLink]="['/home/assets']">Return to Assets Page </button>
+</form>
