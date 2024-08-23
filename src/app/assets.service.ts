@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Asset } from "./asset";
 import { Login } from "./login";
-import { jwtDecode } from "jwt-decode";
 
 @Injectable({
     providedIn: 'root'
@@ -10,10 +9,15 @@ export class AssetService {
     baseurl = 'http://localhost:8000/autismapp'
     token : String = ''
     adminUser : Login = {login_email: 'user', login_password: 'pass'}
+   
     constructor() {
         this.authorizeUser(this.adminUser).then(jwt => {
             this.token = jwt;
             console.log(jwt);
+
+            this.getAssets().then(assets => {
+                console.log(assets);
+            });
         });
     }
 
@@ -28,7 +32,7 @@ export class AssetService {
             }
         );
         if (data.ok) {
-            return data.json(); // Return an empty array or handle the response differently
+            return data.json();
         } else {
             throw new Error(`Failed to fetch assets`);
         }
