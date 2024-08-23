@@ -36,12 +36,10 @@ export class LoginComponent {
 
     this.assetService.authorizeUser(this.newLogin).then(jwt => {
       this.assetService.token = jwt;
-      console.log('im inside the promise');}).then(() => {
+      }).then(() => {
         this.router.navigate(['/home/assets']);
       }).catch(e => {
-      console.log('WRONG WRONG');
+      console.log('WRONG LOGIN');
     });
-
-    console.log('im outside promise');
   }
 }

@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { Asset } from '../asset'
 import { AssetService } from '../assets.service';
 import { Login } from '../login';
-import { AuthGuard } from '../auth-guard';
 
 @Component({
   selector: 'app-manage-asset',
@@ -17,7 +16,6 @@ import { AuthGuard } from '../auth-guard';
 })
 export class ManageAssetComponent {
   assetService: AssetService = inject(AssetService);
-  authGuard: AuthGuard = inject(AuthGuard);
   assetsList: Asset[] = [];
   adminUser : Login = {login_email: 'user', login_password: 'pass'}
   displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url'];
@@ -25,11 +23,9 @@ export class ManageAssetComponent {
   dataSource = new MatTableDataSource();
 
   ngOnInit() : void {
-    //this.authGuard.canActivate().then(() => {
         this.assetService.getAssets().then((assets: Asset[]) => {
           this.dataSource.data = assets;
         });
-   //   });
     }
 
 }

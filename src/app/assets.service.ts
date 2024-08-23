@@ -12,19 +12,13 @@ export class AssetService {
     adminUser : Login = {login_email: 'user', login_password: 'pass'}
     router: Router = inject(Router);
    
-    // constructor() {
-    //     this.authorizeUser(this.adminUser).then(jwt => {
-    //         this.token = jwt;
-    //         console.log(jwt);
-
-    //         this.getAssets().then(assets => {
-    //             console.log(assets);
-    //         });
-    //     });
-    // }
+     constructor() {
+        this._token = localStorage.getItem('authToken') || '';
+     }
 
     set token(value: string) {
         this._token = value;
+        localStorage.setItem('authToken', value);
     }
     
     get token() {
@@ -62,7 +56,6 @@ export class AssetService {
                 const response = await data.json();
                 return response.access_token;
             } else {
-                console.log('wrong');
                 throw new Error(`Failed to fetch assets`);
             } 
     }
