@@ -1,28 +1,38 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Asset } from "./asset";
 import { Login } from "./login";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AssetService {
     baseurl = 'http://localhost:8000/autismapp'
-    token : String = ''
+    private _token : string = ''
     adminUser : Login = {login_email: 'user', login_password: 'pass'}
+    router: Router = inject(Router);
    
-    constructor() {
-        this.authorizeUser(this.adminUser).then(jwt => {
-            this.token = jwt;
-            console.log(jwt);
+    // constructor() {
+    //     this.authorizeUser(this.adminUser).then(jwt => {
+    //         this.token = jwt;
+    //         console.log(jwt);
 
-            this.getAssets().then(assets => {
-                console.log(assets);
-            });
-        });
+    //         this.getAssets().then(assets => {
+    //             console.log(assets);
+    //         });
+    //     });
+    // }
+
+    set token(value: string) {
+        this._token = value;
+    }
+    
+    get token() {
+        return this._token;
     }
 
     async getAssets() : Promise<Asset[]> {
-        const data = await fetch(this.baseurl + "/asset/v1",
+        const data = await fetch(this.baseurl + "/asset/v1/",
             {
             method: 'GET',
             headers: {
@@ -31,10 +41,12 @@ export class AssetService {
             }
             }
         );
+        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
-            throw new Error(`Failed to fetch assets`);
+            this.router.navigate(['/login']);
+            throw new Error(`Error in get assets function`);
         }
     }
 
@@ -50,7 +62,28 @@ export class AssetService {
                 const response = await data.json();
                 return response.access_token;
             } else {
+                console.log('wrong');
                 throw new Error(`Failed to fetch assets`);
             } 
+    }
+
+    async isUserAuth() : Promise<boolean> {
+        const data = await fetch(this.baseurl + "/asset/v1/",
+            {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
+            }
+            }
+        );
+        console.log(this.token);
+        if (data.ok) {
+            console.log('true');
+            return true;
+        } else {
+            console.log('false');
+            return false;
+        }
     }
 }
