@@ -1,40 +1,39 @@
- .login-components {
+.login-components {
     font-family: Sans-Serif;
-    margin: auto 0;
-    padding: 170px;
-  }
-  
-  label {
-      text-align: left;
-      margin-right: 60px;
-      font-size: 20px;
-    }
-     
-  input[type='submit'],
-    label {
-      margin-top: 1rem;
-  }
-  
-  input[type='submit'] {
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-    border-radius: 50px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: dodgerblue;
-    font-size: 20px;
-    color: white;
-    width: 300px;
-    height: 50px;
-    background-color: skyblue;
-    padding: 15px;
-  }
-  
-  input[id='username'],
-  input[id='pass'] {
-    border-radius: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+}
+
+label {
+    margin-right: 20px;
+    font-size: 20px;
+    width: 100px;
+    text-align: right;
+}
+
+input[id='email'],
+input[id='password'] {
+    border-radius: 50px;
     width: 300px;
     height: 50px;
     border-width: 1px;
@@ -42,13 +41,25 @@
     border-style: solid;
     padding: 15px;
     font-size: 20px;
-  }
-  
-  .header {
-    font-size: 1.5rem;
+}
+
+input[type='submit'] {
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: deepskyblue;
+    font-size: 24px;
+    color: white;
+    width: 300px;
+    height: 80px;
+    background-color: skyblue;
     text-align: center;
-  }
-  
-  .login-container {
-    text-align: center;
-  } 
+    line-height: 80px;
+}
+
+input[type='submit']:hover {
+    border-color: rgb(9, 163, 214);
+    background-color: rgb(91, 188, 227);
+}
