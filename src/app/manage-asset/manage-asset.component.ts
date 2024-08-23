@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Asset } from '../asset'
 import { AssetService } from '../assets.service';
 import { Login } from '../login';
+import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manage-asset',
@@ -18,9 +19,11 @@ export class ManageAssetComponent {
   assetService: AssetService = inject(AssetService);
   assetsList: Asset[] = [];
   adminUser : Login = {login_email: 'user', login_password: 'pass'}
-  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url'];
+  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit'];
   route: ActivatedRoute = inject(ActivatedRoute);
   dataSource = new MatTableDataSource();
+  readonly dialog = inject(MatDialog);
+
 
   ngOnInit() : void {
         this.assetService.getAssets().then((assets: Asset[]) => {
@@ -28,4 +31,42 @@ export class ManageAssetComponent {
         });
     }
 
+    openDialog(id: number): void {
+      const dialogRef = this.dialog.open(DeleteDialog, {
+        data: {},
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        if (result === 'yes') {
+          console.log("yes to delete")
+        } 
+      });
+      
+    }
+
+}
+
+@Component({
+  selector: 'delete-dialog',
+  templateUrl: 'delete-dialog.html',
+  standalone: true,
+  imports: [MatDialogContent,
+            MatDialogClose,
+            MatDialogActions,
+            MatDialogTitle,
+            MatButtonModule
+  ],
+})
+
+export class DeleteDialog {
+  readonly dialogRef = inject(MatDialogRef<DeleteDialog>);
+
+  onNoClick(): void {
+    this.dialogRef.close('no');
+  }
+
+  onYesClick(): void {
+    this.dialogRef.close('yes');
+  }
 }

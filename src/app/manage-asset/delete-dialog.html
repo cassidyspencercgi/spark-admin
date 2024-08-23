@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Confirm Delete Asset</h2>
+<mat-dialog-content>
+  <p>Are you sure you want to delete this asset?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="onNoClick()">No, keep this asset</button>
+  <button mat-stroked-button (click)="onYesClick()" [mat-dialog-close]="" cdkFocusInitial>Yes, delete this asset</button>
+</mat-dialog-actions>

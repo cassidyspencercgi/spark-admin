@@ -25,13 +25,13 @@
             <td mat-cell *matCellDef="let asset">{{asset['asset_url']}}</td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="edit">
-            <th mat-header-cell *matHeaderCellDef>Manage</th>
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let asset">
-              <a [routerLink]="['edit', {{asset['asset_id']}}]">Edit</a>
-              <a ><img src="assets/trashcan.png" alt="trashcan" class="trashcan" (click)="openDialog(pet.id)"></a>
+              <a [routerLink]="['edit', asset.id]">Edit</a>
+              <a ><img src="assets/trashcan.png" alt="trashcan" class="trashcan" (click)="openDialog(asset.id)"></a>
             </td>
-        </ng-container> -->
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
