@@ -1,0 +1,20 @@
+<body>
+    <section class="login-components">
+    <p class="header">Admin Login</p>
+    
+    <div class="login-container">
+    <div>
+        <label for="username">Username</label>
+        <input id="email" type="text" [(ngModel)]="login_email" placeholder="Enter your email"/>
+    </div>
+      
+      <div>
+        <label for="pass">Password</label>
+        <input id="password" type="password" [(ngModel)]="login_password" placeholder="Enter your password"/>
+    </div>
+    </div>
+    
+      
+    <input type="submit" value="Sign in" (click)="onSubmit()"/>
+</section>
+</body>

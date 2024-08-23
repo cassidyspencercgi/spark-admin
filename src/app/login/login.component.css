@@ -1,0 +1,54 @@
+ .login-components {
+    font-family: Sans-Serif;
+    margin: auto 0;
+    padding: 170px;
+  }
+  
+  label {
+      text-align: left;
+      margin-right: 60px;
+      font-size: 20px;
+    }
+     
+  input[type='submit'],
+    label {
+      margin-top: 1rem;
+  }
+  
+  input[type='submit'] {
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    border-radius: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: dodgerblue;
+    font-size: 20px;
+    color: white;
+    width: 300px;
+    height: 50px;
+    background-color: skyblue;
+    padding: 15px;
+  }
+  
+  input[id='username'],
+  input[id='pass'] {
+    border-radius: 50px;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 50px;
+    border-width: 1px;
+    border-color: rgb(200, 200, 200);
+    border-style: solid;
+    padding: 15px;
+    font-size: 20px;
+  }
+  
+  .header {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .login-container {
+    text-align: center;
+  } 

@@ -1,8 +1,9 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AssetComponent } from './asset/asset.component';
 import { CreateAssetComponent } from './manage-asset/create-asset/create-asset.component';
 import { ManageAssetComponent } from './manage-asset/manage-asset.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {
@@ -10,7 +11,7 @@ export const routes: Routes = [
         component : HomeComponent,
         children: [
         {   path: 'assets', 
-            component: ManageAssetComponent
+            component: ManageAssetComponent,
         },
         {
             path: 'assets/add',
@@ -19,8 +20,13 @@ export const routes: Routes = [
         title : 'Home Page'
     },
     {
+        path : 'login', 
+        component : LoginComponent,
+        title: 'Login Page'
+    },
+    {
         path : '',
-        redirectTo : 'home/assets',
+        redirectTo : 'login',
         pathMatch : 'full'
     }
 ];

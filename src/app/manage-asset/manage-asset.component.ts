@@ -23,12 +23,9 @@ export class ManageAssetComponent {
   dataSource = new MatTableDataSource();
 
   ngOnInit() : void {
-    this.assetService.authorizeUser(this.adminUser).then(() => {
-      this.assetService.getAssets().then((assets: Asset[]) => {
-        this.dataSource.data = assets;
-      });
-    });
+        this.assetService.getAssets().then((assets: Asset[]) => {
+          this.dataSource.data = assets;
+        });
+    }
 
-    console.log(this.dataSource);
-  }
 }
