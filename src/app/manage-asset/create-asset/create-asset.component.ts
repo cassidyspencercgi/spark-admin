@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, Inject, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,7 +13,6 @@ import { AssetType } from '../../asset.type';
 import { CategoryService } from '../../category.service';
 import { TypeService } from '../../type.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { InjectSetupWrapper } from '@angular/core/testing';
 
 @Component({
   selector: 'app-create-asset',
@@ -53,10 +52,10 @@ export class CreateAssetComponent {
 
   constructor(private fb: FormBuilder) {
     this.addAssetForm = this.fb.group({
-      name: ['', Validators.required],
-      asset_category: ['', Validators.required],
-      asset_type: ['', Validators.required],
-      asset_url: ['', Validators.required]
+      name: new FormControl('', [Validators.required]),
+  asset_category: new FormControl('', [Validators.required]),
+  asset_type: new FormControl('', [Validators.required]),
+  asset_url: new FormControl('', [Validators.required]),
     })
   }
 
@@ -79,8 +78,7 @@ export class CreateAssetComponent {
     if (this.addAssetForm.valid) {
       let categoryId = await this.categoryService.getIdbyName(this.addAssetForm.get('asset_category')?.value);
       let typeId = await this.typeService.getIdbyName(this.addAssetForm.get('asset_type')?.value);
-      
-      console.log(this.addAssetForm.get('asset_url')?.value)
+            
       this.newAsset = {
         asset_id: -1,
         asset_name: this.addAssetForm.get('name')?.value,
@@ -88,8 +86,10 @@ export class CreateAssetComponent {
         asset_type_id: typeId,
         asset_url: this.addAssetForm.get('asset_url')?.value
       }
-      this.service.createAsset(this.newAsset);
-      console.log(this.newAsset);
+      await this.service.createAsset(this.newAsset);
+
+      this.openDialog(this.newAsset.asset_name);
+      this.addAssetForm.reset();
 
       this.newAsset = {
         asset_id: 1,
@@ -98,16 +98,10 @@ export class CreateAssetComponent {
         asset_type_id: 1,
         asset_url: ''
       }
-      this.addAssetForm = this.fb.group({
-        name: ['', Validators.required],
-        asset_category: ['', Validators.required],
-        asset_type: ['', Validators.required],
-        asset_url: ['', Validators.required]
-      });
-      this.openDialog(this.newAsset.asset_name);
     }
     else {
-      this.addAssetForm?.markAllAsTouched();
+      this.openErrorDialog();
+      console.log("error")
     }
   }
 
@@ -119,9 +113,19 @@ export class CreateAssetComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
-    
+    this.addAssetForm.reset(); 
   }
 
+  openErrorDialog(): void {
+    const dialogRef = this.dialog.open(ErrorDialog, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+    this.addAssetForm.reset();
+  }
 }
 
 @Component({
@@ -143,6 +147,29 @@ export class SaveAssetDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {asset_name: string}){}
+  
+  onOkClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'error-dialog',
+  templateUrl: 'error-dialog.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+    CommonModule,
+    NgIf
+  ],
+})
+
+export class ErrorDialog {
+  readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
   
   onOkClick(): void {
     this.dialogRef.close();
