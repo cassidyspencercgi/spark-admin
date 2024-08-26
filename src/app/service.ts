@@ -61,6 +61,18 @@ export class Service {
         }
     }
 
+    async deleteAsset(id: number) {
+        console.log(id);
+        await fetch(this.baseurl + this.path.ASSET + id, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(id),
+          })
+    }
+
     /***********************Category***********************/
     async getCategories() : Promise<Category[]> {
         console.log("getCategories: " + this.baseurl + this.path.CATEGORY);

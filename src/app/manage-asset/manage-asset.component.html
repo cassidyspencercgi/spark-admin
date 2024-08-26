@@ -29,7 +29,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let asset">
               <a [routerLink]="['edit', asset.id]">Edit</a>
-              <a ><img src="../../assets/trashcan.png" alt="trashcan" class="trashcan" (click)="openDialog(asset.id)"></a>
+              <a ><img src="../../assets/trashcan.png" alt="trashcan" class="trashcan" (click)="openDialog(asset.asset_id)"></a>
             </td>
         </ng-container>
 
