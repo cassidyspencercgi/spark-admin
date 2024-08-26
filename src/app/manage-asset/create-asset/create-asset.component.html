@@ -4,7 +4,7 @@
     <section>
         <mat-form-field>
             <mat-label>Asset Name</mat-label>
-            <input name="name" required matInput formControlName="name">
+            <input name="name" matInput formControlName="name">
             <mat-error *ngIf="addAssetForm.get('name')?.invalid && addAssetForm.get('name')?.touched">
                 Asset name is required.
               </mat-error>
@@ -12,7 +12,7 @@
 
         <mat-form-field>
             <mat-label>Asset Category</mat-label>
-            <mat-select required formControlName="asset_category">
+            <mat-select formControlName="asset_category">
                 <mat-option *ngFor="let name of categoryNames" [value]="name">{{name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="addAssetForm.get('asset_category')?.invalid && addAssetForm.get('asset_category')?.touched">
@@ -22,7 +22,7 @@
 
         <mat-form-field>
             <mat-label>Asset Type</mat-label>
-            <mat-select required formControlName="asset_type">
+            <mat-select formControlName="asset_type">
                 <mat-option *ngFor="let name of typeNames" [value]="name">{{name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="addAssetForm.get('asset_type')?.invalid && addAssetForm.get('asset_type')?.touched">
@@ -32,7 +32,7 @@
 
         <mat-form-field>
             <mat-label>Asset Url</mat-label>
-            <input type="asset_url" required matInput formControlName="asset_url">
+            <input type="asset_url" matInput formControlName="asset_url">
             <mat-error *ngIf="addAssetForm.get('asset_url')?.invalid && addAssetForm.get('asset_url')?.touched">
                 Asset url is required.
               </mat-error>
