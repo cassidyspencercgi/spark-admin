@@ -12,7 +12,9 @@
 
         <mat-form-field>
             <mat-label>Asset Category</mat-label>
-            <input category="asset_category" required matInput formControlName="asset_category">
+            <mat-select required formControlName="asset_category">
+                <mat-option *ngFor="let name of categoryNames" [value]="name">{{name}}</mat-option>
+            </mat-select>
             <mat-error *ngIf="addAssetForm.get('asset_category')?.invalid && addAssetForm.get('asset_category')?.touched">
                 Asset type is required.
               </mat-error>
@@ -20,7 +22,9 @@
 
         <mat-form-field>
             <mat-label>Asset Type</mat-label>
-            <input type="asset_type" required matInput formControlName="asset_type">
+            <mat-select required formControlName="asset_type">
+                <mat-option *ngFor="let name of typeNames" [value]="name">{{name}}</mat-option>
+            </mat-select>
             <mat-error *ngIf="addAssetForm.get('asset_type')?.invalid && addAssetForm.get('asset_type')?.touched">
                 Asset type is required.
               </mat-error>
