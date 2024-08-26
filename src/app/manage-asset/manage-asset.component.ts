@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,28 +7,50 @@ import { Asset } from '../asset'
 import { Service } from '../service';
 import { Login } from '../login';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-manage-asset',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, MatTableModule, MatButtonModule],
+  imports: [CommonModule, 
+            RouterLink, 
+            RouterOutlet, 
+            MatTableModule, 
+            MatButtonModule, 
+            MatSortModule,
+            MatSort
+            ],
   templateUrl: './manage-asset.component.html',
   styleUrl: './manage-asset.component.css'
 })
 export class ManageAssetComponent {
   service: Service = inject(Service);
   assetsList: Asset[] = [];
-  adminUser : Login = {login_email: 'user', login_password: 'pass'}
-  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit'];
   route: ActivatedRoute = inject(ActivatedRoute);
+  
+  component: string;
+  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit'];
   dataSource = new MatTableDataSource();
+  @ViewChild(MatSort)
+  sort: MatSort = new MatSort;
+  
   readonly dialog = inject(MatDialog);
 
+  @ViewChild(MatTable) table!: MatTable<any>;
+  constructor() {
+    this.component = this.route.snapshot.params['component'];
+  }
 
   ngOnInit() : void {
         this.service.getAssets().then((assets: Asset[]) => {
           this.dataSource.data = assets;
         });
+    }
+    ngAfterViewInit(): void {
+      console.log("inside on AfterViewInit");
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+      }
     }
 
     openDialog(id: number): void {

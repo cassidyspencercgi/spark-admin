@@ -1,7 +1,6 @@
-<h2 mat-dialog-title>Asset Saved</h2>
+<h2 mat-dialog-title>Error</h2>
 <mat-dialog-content>
-  <p>Name:</p>
-  <p *ngIf="data?.asset_name">{{ data.asset_name }}</p>
+  <p>Error saving asset. Please make sure all fields are complete and correct.</p>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-stroked-button (click)="onOkClick()" [mat-dialog-close]="" cdkFocusInitial>Okay</button>
