@@ -39,10 +39,18 @@ export class ManageAssetComponent {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         if (result === 'yes') {
-          console.log("yes to delete")
+          this.deleteAsset(id);
         } 
+      });      
+    }
+
+    deleteAsset(id: number): void {
+      console.log(id);
+      this.service.deleteAsset(id).then(x => {
+        this.service.getAssets().then((assets: Asset[]) => {
+          this.dataSource.data = assets;
+        });
       });
-      
     }
 
 }
