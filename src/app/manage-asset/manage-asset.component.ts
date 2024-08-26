@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { Asset } from '../asset'
-import { AssetService } from '../assets.service';
+import { Service } from '../service';
 import { Login } from '../login';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 
@@ -16,7 +16,7 @@ import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialo
   styleUrl: './manage-asset.component.css'
 })
 export class ManageAssetComponent {
-  assetService: AssetService = inject(AssetService);
+  service: Service = inject(Service);
   assetsList: Asset[] = [];
   adminUser : Login = {login_email: 'user', login_password: 'pass'}
   displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit'];
@@ -26,7 +26,7 @@ export class ManageAssetComponent {
 
 
   ngOnInit() : void {
-        this.assetService.getAssets().then((assets: Asset[]) => {
+        this.service.getAssets().then((assets: Asset[]) => {
           this.dataSource.data = assets;
         });
     }

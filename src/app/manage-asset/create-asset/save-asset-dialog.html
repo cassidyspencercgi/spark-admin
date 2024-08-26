@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Congrats!</h2>
+<mat-dialog-content>
+  <p>Saved Asset:</p>
+  <p *ngIf="data?.asset_name">{{ data.asset_name }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="onOkClick()" [mat-dialog-close]="" cdkFocusInitial>Okay</button>
+</mat-dialog-actions>
