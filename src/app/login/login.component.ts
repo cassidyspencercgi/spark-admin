@@ -1,6 +1,6 @@
 import { Component, inject, input, computed} from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { AssetService } from '../assets.service';
+import { Service } from '../service';
 import { Login } from '../login';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(private _router: Router) {
   }
 
-  assetService: AssetService = inject(AssetService);
+  service: Service = inject(Service);
   router: Router = inject(Router);
   readonly dialog = inject(MatDialog);
 
@@ -37,8 +37,8 @@ export class LoginComponent {
       login_password: this.login_password
     };
 
-    this.assetService.authorizeUser(this.newLogin).then(jwt => {
-      this.assetService.token = jwt;
+    this.service.authorizeUser(this.newLogin).then(jwt => {
+      this.service.token = jwt;
       }).then(() => {
         this.router.navigate(['/home/assets']);
       }).catch(e => {

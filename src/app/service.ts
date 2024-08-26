@@ -8,7 +8,7 @@ import { AssetType } from "./asset.type";
 @Injectable({
     providedIn: 'root'
 })
-export class AssetService {
+export class Service {
     baseurl = 'http://localhost:8000/autismapp'
     private _token : string = ''
     router: Router = inject(Router);
@@ -29,9 +29,12 @@ export class AssetService {
     }
     /***********************Asset***********************/
     async createAsset(newAsset: Asset) {
+        console.log("createAsset: " + this.baseurl + this.path.ASSET);
+        console.log(JSON.stringify(newAsset))
         fetch(this.baseurl + this.path.ASSET, {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${this.token}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(newAsset),
@@ -39,6 +42,7 @@ export class AssetService {
     }
 
     async getAssets() : Promise<Asset[]> {
+        console.log("getAssets: " + this.baseurl + this.path.ASSET);
         const data = await fetch(this.baseurl + this.path.ASSET,
             {
             method: 'GET',
@@ -52,13 +56,14 @@ export class AssetService {
         if (data.ok) {
             return data.json();
         } else {
-            this.router.navigate(['/login/']);
+            this.router.navigate(['/login']);
             throw new Error(`Error in get assets function`);
         }
     }
 
     /***********************Category***********************/
     async getCategories() : Promise<Category[]> {
+        console.log("getCategories: " + this.baseurl + this.path.CATEGORY);
         const data = await fetch(this.baseurl + this.path.CATEGORY,
             {
             method: 'GET',
@@ -72,7 +77,7 @@ export class AssetService {
         if (data.ok) {
             return data.json();
         } else {
-            this.router.navigate(['/assets/']);
+            this.router.navigate(['/assets']);
             throw new Error(`Error in getting categories`);
         }
     }
@@ -91,13 +96,15 @@ export class AssetService {
         if (data.ok) {
             return data.json();
         } else {
-            this.router.navigate(['/assets/']);
+            this.router.navigate(['/assets']);
             throw new Error(`Error in getting categories`);
         }
     }
 
+
     /***********************Asset Type***********************/
     async getTypes() : Promise<AssetType[]> {
+        console.log("getTypes: " + this.baseurl + this.path.TYPE);
         const data = await fetch(this.baseurl + this.path.TYPE,
             {
             method: 'GET',
@@ -111,7 +118,7 @@ export class AssetService {
         if (data.ok) {
             return data.json();
         } else {
-            this.router.navigate(['/assets/']);
+            this.router.navigate(['/assets']);
             throw new Error(`Error in getting types`);
         }
     }
@@ -130,7 +137,7 @@ export class AssetService {
         if (data.ok) {
             return data.json();
         } else {
-            this.router.navigate(['/assets/']);
+            this.router.navigate(['/assets']);
             throw new Error(`Error in get type id by name`);
         }
     }

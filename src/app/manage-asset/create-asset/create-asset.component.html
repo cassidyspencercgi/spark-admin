@@ -16,7 +16,7 @@
                 <mat-option *ngFor="let name of categoryNames" [value]="name">{{name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="addAssetForm.get('asset_category')?.invalid && addAssetForm.get('asset_category')?.touched">
-                Asset type is required.
+                Asset category is required.
               </mat-error>
         </mat-form-field>
 
@@ -34,7 +34,7 @@
             <mat-label>Asset Url</mat-label>
             <input type="asset_url" required matInput formControlName="asset_url">
             <mat-error *ngIf="addAssetForm.get('asset_url')?.invalid && addAssetForm.get('asset_url')?.touched">
-                Asset type is required.
+                Asset url is required.
               </mat-error>
         </mat-form-field>
 
