@@ -1,8 +1,61 @@
-* {
-    padding: 5px 20px;
-}
+
 .trashcan {
     cursor: pointer;
     height: 13px;
     padding: 0px;
+}
+/* General Styling */
+h1 {
+    font-family: Sans-Serif;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 2.5rem;
+}
+
+/* Section Styling */
+section {
+    margin-bottom: 30px;
+}
+
+/* Button Styling */
+button[mat-stroked-button] {
+    border-radius: 5px;
+    border: 2px solid #007ACC;
+    font-size: 1rem;
+    color: white;
+    background-color: skyblue;
+    width: 100%;
+    max-width: 300px;
+    height: 50px;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+}
+
+button[mat-stroked-button]:hover {
+    border-color: rgb(9, 163, 214);
+    background-color: rgb(91, 188, 227);
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #E0EFF9;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
 }
