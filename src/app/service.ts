@@ -94,6 +94,25 @@ export class Service {
         }
     }
 
+    async getCategory(id: number) : Promise<Category> {
+        const data = await fetch(this.baseurl + this.path.CATEGORY + "?category_id=" + id,
+            {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
+            }
+            }
+        );
+        console.log(this.token);
+        if (data.ok) {
+            return data.json();
+        } else {
+            this.router.navigate(['/assets']);
+            throw new Error(`Error in getting categories`);
+        }
+    }
+
     async getCategoryIdbyName(name: string) : Promise<number> { ///TODOOOOO
         const data = await fetch(this.baseurl + this.path.CATEGORY + '?category_name=' + name,
             {
@@ -134,6 +153,26 @@ export class Service {
             throw new Error(`Error in getting types`);
         }
     }
+
+    async getType(id: number) : Promise<AssetType> {
+        const data = await fetch(this.baseurl + this.path.TYPE + id,
+            {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
+            }
+            }
+        );
+        console.log(this.token);
+        if (data.ok) {
+            return data.json();
+        } else {
+            this.router.navigate(['/assets']);
+            throw new Error(`Error in getting asset types`);
+        }
+    }
+
 
     async getTypeIdbyName(name: string) : Promise<number> { ///TODOOOO
         const data = await fetch(this.baseurl + this.path.CATEGORY + 'type' + name,

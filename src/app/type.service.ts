@@ -9,13 +9,8 @@ export class TypeService {
     service: Service = inject(Service);
 
     getNamebyId(id: number) : Promise<string> {
-        return this.service.getTypes().then((c: AssetType[]) => {
-            let type_name = '';
-            c.forEach((type) => {
-                if(type.asset_type_id === id) {
-                    type_name = type.asset_type_name;
-                }
-            });
+        return this.service.getType(id).then((t: AssetType) => {
+            let type_name = t.asset_type_name;
             return type_name;
         });
     }

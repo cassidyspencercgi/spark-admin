@@ -8,14 +8,9 @@ import { Category } from "./category";
 export class CategoryService {
     service: Service = inject(Service);
 
-    getNamebyId(id: number): Promise<string> {
-        return this.service.getCategories().then((c: Category[]) => {
-            let category_name = '';
-            c.forEach((category) => {
-                if (category.category_id === id) {
-                    category_name = category.category_name;
-                }
-            });
+    getNamebyId(id: number) : Promise<string> {
+        return this.service.getCategory(id).then((c: Category) => {
+            let category_name = c.category_name;
             return category_name;
         });
     }
