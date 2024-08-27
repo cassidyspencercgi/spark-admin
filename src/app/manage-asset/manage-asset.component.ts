@@ -8,6 +8,8 @@ import { Service } from '../service';
 import { Login } from '../login';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { CategoryService } from '../category.service';
+import { TypeService } from '../type.service';
 
 @Component({
   selector: 'app-manage-asset',
@@ -25,6 +27,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 })
 export class ManageAssetComponent {
   service: Service = inject(Service);
+  categoryService: CategoryService = inject(CategoryService);
+  typeService: TypeService = inject(TypeService);
+  
   assetsList: Asset[] = [];
   route: ActivatedRoute = inject(ActivatedRoute);
   
@@ -36,6 +41,10 @@ export class ManageAssetComponent {
   
   readonly dialog = inject(MatDialog);
 
+  assets: Asset[] = [];
+  categoryNames: { [key: number]: string } = {};
+  typeNames: { [key: number]: string } = {};
+
   @ViewChild(MatTable) table!: MatTable<any>;
   constructor() {
     this.component = this.route.snapshot.params['component'];
@@ -43,14 +52,41 @@ export class ManageAssetComponent {
 
   ngOnInit() : void {
         this.service.getAssets().then((assets: Asset[]) => {
+          this.assets = assets;
           this.dataSource.data = assets;
+          const categoryPromises = assets.map((asset) => {
+            return this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
+                this.categoryNames[asset.asset_category_id] = name;
+            });
         });
+
+        const typePromises = assets.map((asset) => {
+            return this.typeService.getNamebyId(asset.asset_type_id).then(name => {
+                this.typeNames[asset.asset_type_id] = name;
+            });
+        });
+
+        // Wait for all category and type names to be fetched
+        Promise.all([...categoryPromises, ...typePromises]).then(() => {
+            this.dataSource.data = this.assets;
+            this.table.renderRows(); // Ensure table is re-rendered
+        });
+    });
     }
+
     ngAfterViewInit(): void {
       console.log("inside on AfterViewInit");
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
+    }
+  
+    getCategoryName(id: number): string {
+      return this.categoryNames[id];
+    }
+  
+    getTypeName(id: number): string {
+      return this.typeNames[id];
     }
 
     openDialog(id: number): void {
