@@ -206,7 +206,8 @@ export class Service {
                 const response = await data.json();
                 return response.access_token;
             } else {
-                throw new Error(`Failed to fetch assets`);
+                this.router.navigate(['/login']);
+                throw new Error(`Failed to authorize`);
             } 
     }
 }
