@@ -98,7 +98,7 @@ export class Service {
     }
 
     async deleteAsset(id: number) {
-        console.log(id);
+        console.log(this.baseurl + this.path.ASSET + id);
         await fetch(this.baseurl + this.path.ASSET + id, {
             method: 'DELETE',
             headers: {
@@ -121,7 +121,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
@@ -140,7 +139,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
@@ -159,7 +157,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
@@ -181,7 +178,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
@@ -200,7 +196,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
@@ -220,7 +215,6 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
