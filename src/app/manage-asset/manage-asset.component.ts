@@ -51,32 +51,35 @@ export class ManageAssetComponent {
   }
 
   ngOnInit() : void {
-        this.service.getAssets().then((assets: Asset[]) => {
-          this.assets = assets;
-          this.dataSource.data = assets;
-          const categoryPromises = assets.map((asset) => {
-            if(!(asset.asset_category_id in this.categoryNames))
-            return this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
-                this.categoryNames[asset.asset_category_id] = name;
-            }); else {
-              return Promise.resolve();
-            };
-        });
+    this.service.getAssets().then((assets: Asset[]) => {
+  this.assets = assets;
+  this.dataSource.data = assets;
 
-        const typePromises = assets.map((asset) => {
-            if(!(asset.asset_type_id in this.typeNames))
-            return this.typeService.getNamebyId(asset.asset_type_id).then(name => {
-                this.typeNames[asset.asset_type_id] = name;
-            }); else {
-              return Promise.resolve();
-            };
-        });
+  const categoryPromises = new Map<number, Promise<void>>();
+  const typePromises = new Map<number, Promise<void>>();
 
-        Promise.all([...categoryPromises, ...typePromises]).then(() => {
-            this.dataSource.data = this.assets;
-            this.table.renderRows();
-        });
-    });
+  assets.forEach((asset) => {
+    if (!categoryPromises.has(asset.asset_category_id)) {
+      const promise = this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
+        this.categoryNames[asset.asset_category_id] = name;
+      });
+      categoryPromises.set(asset.asset_category_id, promise);
+    }
+
+    if (!typePromises.has(asset.asset_type_id)) {
+      const promise = this.typeService.getNamebyId(asset.asset_type_id).then(name => {
+        this.typeNames[asset.asset_type_id] = name;
+      });
+      typePromises.set(asset.asset_type_id, promise);
+    }
+  });
+
+  Promise.all([...categoryPromises.values(), ...typePromises.values()]).then(() => {
+    this.dataSource.data = this.assets;
+    this.table.renderRows();
+  });
+});
+
     }
 
     ngAfterViewInit(): void {
