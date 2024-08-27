@@ -52,12 +52,48 @@ export class Service {
             }
             }
         );
-        console.log(this.token);
         if (data.ok) {
             return data.json();
         } else {
             this.router.navigate(['/login']);
             throw new Error(`Error in get assets function`);
+        }
+    }
+
+    async getAsset(id: number) : Promise<Asset> {
+        console.log("getAsset: " + this.baseurl + this.path.ASSET);
+        const data = await fetch(this.baseurl + this.path.ASSET + id,
+            {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
+            }
+            }
+        );
+        if (data.ok) {
+            return data.json();
+        } else {
+            this.router.navigate(['/asset']);
+            throw new Error(`Error in get asset function`);
+        }
+    }
+
+    async editAsset(id: number, asset: Asset) {
+        console.log("edit asset: " + id)
+        const data = await fetch(this.baseurl + this.path.ASSET + id, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(asset),
+          });
+          if (data.ok) {
+            return data.json();
+        } else {
+            this.router.navigate(['/assets']);
+            throw new Error(`Error in edit asset function`);
         }
     }
 
