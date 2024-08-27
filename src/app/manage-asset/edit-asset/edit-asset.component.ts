@@ -31,10 +31,16 @@ export class EditAssetComponent {
   readonly dialog = inject(MatDialog);
   editAssetForm: FormGroup;
 
-  assetId!: string;
-  oldAsset!: Asset;
-  assetCategory!: string;
-  assetType!: string;
+  assetId: string = '';
+  oldAsset: Asset = {
+    'asset_id': 0,
+    'asset_name': '',
+    'asset_category_id': 1,
+    'asset_type_id': 1,
+    'asset_url': '' 
+  };
+  assetCategory: string = '';
+  assetType: string = '';
 
   categoryNames: string[] = [];
   typeNames: string[] = [];
@@ -76,18 +82,28 @@ export class EditAssetComponent {
         });
 
         this.fetchAssetDetails();
-  }
+        }
 
   async fetchAssetDetails() {
-    this.service.getAsset(Number(this.assetId)).then(a => {
-      this.oldAsset = a;
-       this.categoryService.getNamebyId(a.asset_category_id).then(n => {
-         this.assetCategory = n;
-       });
-      this.typeService.getNamebyId(a.asset_category_id).then(n => {
-         this.assetType = n;
-      });
-  });
+    const asset = await this.service.getAsset(Number(this.assetId));
+    this.oldAsset = asset;
+  
+    const category = await this.categoryService.getNamebyId(asset.asset_category_id);
+    this.assetCategory = category;
+  
+    const type = await this.typeService.getNamebyId(asset.asset_type_id);
+    this.assetType = type;
+  
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.editAssetForm = this.fb.group({
+      name: new FormControl(this.oldAsset.asset_name, [Validators.required]),
+      asset_category: new FormControl(this.assetCategory, [Validators.required]),
+      asset_type: new FormControl(this.assetType, [Validators.required]),
+      asset_url: new FormControl(this.oldAsset.asset_url, [Validators.required]),
+    })
   }
 
   async saveAsset() {
@@ -105,7 +121,8 @@ export class EditAssetComponent {
       await this.service.editAsset(Number(this.assetId), this.newAsset);
 
       this.openDialog(this.newAsset.asset_name);
-      this.editAssetForm.reset();
+      this.fetchAssetDetails()
+      this.resetForm();
 
       this.newAsset = {
         asset_id: 1,
