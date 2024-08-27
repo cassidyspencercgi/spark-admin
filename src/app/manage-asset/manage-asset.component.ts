@@ -55,21 +55,26 @@ export class ManageAssetComponent {
           this.assets = assets;
           this.dataSource.data = assets;
           const categoryPromises = assets.map((asset) => {
+            if(!(asset.asset_category_id in this.categoryNames))
             return this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
                 this.categoryNames[asset.asset_category_id] = name;
-            });
+            }); else {
+              return Promise.resolve();
+            };
         });
 
         const typePromises = assets.map((asset) => {
+            if(!(asset.asset_type_id in this.typeNames))
             return this.typeService.getNamebyId(asset.asset_type_id).then(name => {
                 this.typeNames[asset.asset_type_id] = name;
-            });
+            }); else {
+              return Promise.resolve();
+            };
         });
 
-        // Wait for all category and type names to be fetched
         Promise.all([...categoryPromises, ...typePromises]).then(() => {
             this.dataSource.data = this.assets;
-            this.table.renderRows(); // Ensure table is re-rendered
+            this.table.renderRows();
         });
     });
     }
@@ -101,6 +106,8 @@ export class ManageAssetComponent {
         } 
       });      
     }
+
+
 
     deleteAsset(id: number): void {
       console.log(id);

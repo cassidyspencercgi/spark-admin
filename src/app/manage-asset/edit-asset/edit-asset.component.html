@@ -1,1 +1,49 @@
-<p>edit-asset works!</p>
+<h1>Editing asset: {{oldAsset.asset_name}}</h1>
+
+<form [formGroup]="editAssetForm" (ngSubmit)="saveAsset()">
+    <section>
+        <mat-form-field>
+            <p>Current = {{oldAsset.asset_name}}</p>
+            <mat-label>Asset Name</mat-label>
+            <input name="name" matInput formControlName="name">
+            <mat-error *ngIf="editAssetForm.get('name')?.invalid && editAssetForm.get('name')?.touched">
+                Asset name is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <p>Current = {{assetCategory}}</p>
+            <mat-label>Asset Category</mat-label>
+            <mat-select formControlName="asset_category">
+                <mat-option *ngFor="let name of categoryNames" [value]="name">{{name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="editAssetForm.get('asset_category')?.invalid && editAssetForm.get('asset_category')?.touched">
+                Asset category is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <p>Current = {{assetType}}</p>
+            <mat-label>Asset Type</mat-label>
+            <mat-select formControlName="asset_type">
+                <mat-option *ngFor="let name of typeNames" [value]="name">{{name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="editAssetForm.get('asset_type')?.invalid && editAssetForm.get('asset_type')?.touched">
+                Asset type is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <p>Current = {{oldAsset.asset_url}}</p>
+            <mat-label>Asset Url</mat-label>
+            <input type="asset_url" matInput formControlName="asset_url">
+            <mat-error *ngIf="editAssetForm.get('asset_url')?.invalid && editAssetForm.get('asset_url')?.touched">
+                Asset url is required.
+              </mat-error>
+        </mat-form-field>
+
+    </section>
+
+    <button mat-stroked-button type="submit">Save</button>
+    <button mat-stroked-button [routerLink]="['/assets']">Return to Assets Page </button>
+</form>
