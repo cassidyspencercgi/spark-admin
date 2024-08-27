@@ -34,7 +34,7 @@ export class ManageAssetComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   
   component: string;
-  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit'];
+  displayedColumns: string[] = ['asset_name', 'asset_category_id', 'asset_type_id', 'asset_url', 'edit', 'delete'];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
