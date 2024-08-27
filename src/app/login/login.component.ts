@@ -43,7 +43,6 @@ export class LoginComponent {
         this.router.navigate(['/home/assets']);
       }).catch(e => {
         this.openDialog();
-      console.log('WRONG LOGIN');
     });
   }
 
@@ -53,7 +52,6 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 }

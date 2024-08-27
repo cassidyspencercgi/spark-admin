@@ -101,7 +101,6 @@ export class CreateAssetComponent {
     }
     else {
       this.openErrorDialog();
-      console.log("error")
     }
   }
 
@@ -111,7 +110,6 @@ export class CreateAssetComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
     this.addAssetForm.reset(); 
   }
@@ -122,7 +120,6 @@ export class CreateAssetComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
     this.addAssetForm.reset();
   }

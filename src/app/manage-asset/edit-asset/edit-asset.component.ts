@@ -134,7 +134,6 @@ export class EditAssetComponent {
     }
     else {
       this.openErrorDialog();
-      console.log("error")
     }
   }
 
@@ -144,7 +143,6 @@ export class EditAssetComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
     this.editAssetForm.reset(); 
   }
@@ -155,7 +153,6 @@ export class EditAssetComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
     this.editAssetForm.reset();
   }

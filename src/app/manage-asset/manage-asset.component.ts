@@ -83,7 +83,6 @@ export class ManageAssetComponent {
     }
 
     ngAfterViewInit(): void {
-      console.log("inside on AfterViewInit");
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
@@ -103,7 +102,6 @@ export class ManageAssetComponent {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
         if (result === 'yes') {
           this.deleteAsset(id);
         } 
@@ -113,7 +111,6 @@ export class ManageAssetComponent {
 
 
     deleteAsset(id: number): void {
-      console.log(id);
       this.service.deleteAsset(id).then(x => {
         this.service.getAssets().then((assets: Asset[]) => {
           this.dataSource.data = assets;
