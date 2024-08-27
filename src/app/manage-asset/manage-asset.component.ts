@@ -51,27 +51,35 @@ export class ManageAssetComponent {
   }
 
   ngOnInit() : void {
-        this.service.getAssets().then((assets: Asset[]) => {
-          this.assets = assets;
-          this.dataSource.data = assets;
-          const categoryPromises = assets.map((asset) => {
-            return this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
-                this.categoryNames[asset.asset_category_id] = name;
-            });
-        });
+    this.service.getAssets().then((assets: Asset[]) => {
+  this.assets = assets;
+  this.dataSource.data = assets;
 
-        const typePromises = assets.map((asset) => {
-            return this.typeService.getNamebyId(asset.asset_type_id).then(name => {
-                this.typeNames[asset.asset_type_id] = name;
-            });
-        });
+  const categoryPromises = new Map<number, Promise<void>>();
+  const typePromises = new Map<number, Promise<void>>();
 
-        // Wait for all category and type names to be fetched
-        Promise.all([...categoryPromises, ...typePromises]).then(() => {
-            this.dataSource.data = this.assets;
-            this.table.renderRows(); // Ensure table is re-rendered
-        });
-    });
+  assets.forEach((asset) => {
+    if (!categoryPromises.has(asset.asset_category_id)) {
+      const promise = this.categoryService.getNamebyId(asset.asset_category_id).then(name => {
+        this.categoryNames[asset.asset_category_id] = name;
+      });
+      categoryPromises.set(asset.asset_category_id, promise);
+    }
+
+    if (!typePromises.has(asset.asset_type_id)) {
+      const promise = this.typeService.getNamebyId(asset.asset_type_id).then(name => {
+        this.typeNames[asset.asset_type_id] = name;
+      });
+      typePromises.set(asset.asset_type_id, promise);
+    }
+  });
+
+  Promise.all([...categoryPromises.values(), ...typePromises.values()]).then(() => {
+    this.dataSource.data = this.assets;
+    this.table.renderRows();
+  });
+});
+
     }
 
     ngAfterViewInit(): void {
@@ -101,6 +109,8 @@ export class ManageAssetComponent {
         } 
       });      
     }
+
+
 
     deleteAsset(id: number): void {
       console.log(id);
