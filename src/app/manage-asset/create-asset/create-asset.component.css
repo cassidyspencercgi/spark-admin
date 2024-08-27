@@ -31,7 +31,7 @@ mat-form-field mat-label {
 /* Button Styling */
 button[mat-stroked-button] {
     border-radius: 5px;
-    border: 2px solid deepskyblue;
+    border: 2px solid #007ACC;
     font-size: 1rem;
     color: white;
     background-color: skyblue;
