@@ -4,5 +4,6 @@
   <p *ngIf="data?.asset_name">{{ data.asset_name }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-stroked-button (click)="onOkClick()" [mat-dialog-close]="" cdkFocusInitial>Okay</button>
+  <button mat-stroked-button (click)="onClick()" [routerLink]="['/home/assets']">Done</button>
+  <button mat-stroked-button (click)="onClick()" [routerLink]="['/home/assets/add']">Add another asset</button>
 </mat-dialog-actions>

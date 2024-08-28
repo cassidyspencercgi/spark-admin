@@ -136,7 +136,8 @@ export class CreateAssetComponent {
     MatDialogClose,
     MatButtonModule,
     CommonModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
 })
 
@@ -144,8 +145,8 @@ export class SaveAssetDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {asset_name: string}){}
-  
-  onOkClick(): void {
+
+  onClick(): void {
     this.dialogRef.close();
   }
 }
