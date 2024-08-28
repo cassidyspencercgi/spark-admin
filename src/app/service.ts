@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { PathVariables } from "./path.variables";
 import { Category } from "./category";
 import { AssetType } from "./asset.type";
+import { User } from "./user";
 @Injectable({
     providedIn: 'root'
 })
@@ -240,4 +241,25 @@ export class Service {
                 throw new Error(`Failed to authorize`);
             } 
     }
+
+        /***********************User***********************/
+        async getUsers() : Promise<User[]> {
+            console.log("getUsers: " + this.baseurl + this.path.User);
+            const data = await fetch(this.baseurl + this.path.ASSET,
+                {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json'
+                }
+                }
+            );
+            if (data.ok) {
+                return data.json();
+            } else {
+                this.router.navigate(['/login']);
+                throw new Error(`Error in get assets function`);
+            }
+        }        
+
 }

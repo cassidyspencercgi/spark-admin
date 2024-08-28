@@ -1,0 +1,68 @@
+
+.trashcan {
+    cursor: pointer;
+    height: 13px;
+    padding: 0px;
+}
+/* General Styling */
+h1 {
+    font-family: Sans-Serif;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 2rem;
+    padding-left: 30px;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+/* Section Styling */
+section {
+    display: flex; /* Enable flexbox on the section */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+button[mat-stroked-button] {
+    border-radius: 5px;
+    border: 2px solid #007ACC;
+    font-size: 1rem;
+    color: white;
+    background-color: skyblue;
+    width: auto;
+    max-width: 300px;
+    height: 50px;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+    margin-right: 20px;
+}
+
+button[mat-stroked-button]:hover {
+    border-color: rgb(9, 163, 214);
+    background-color: rgb(91, 188, 227);
+}
+
+
+
+table {
+    width: 100%;
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #E0EFF9;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
