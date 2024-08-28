@@ -1,0 +1,29 @@
+/* Section Styling */
+section {
+    display: flex;
+    margin: 20px 0;
+    padding: 14px;
+    background-color: skyblue;
+}
+
+/* Link Styling */
+section a {
+    font-family: Sans-Serif;
+    font-size: 1.2rem;
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+section a:hover {
+    color: rgb(0, 108, 148);
+}
+
+section a.active {
+    background-color: deepskyblue;
+    color: white;
+    border-color: deepskyblue;
+}
