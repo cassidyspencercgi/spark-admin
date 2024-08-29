@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { Service } from '../../service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Asset } from '../../asset';
 import { CategoryService } from '../../category.service';
 import { TypeService } from '../../type.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../category';
 import { AssetType } from '../../asset.type';
@@ -122,15 +122,7 @@ export class EditAssetComponent {
 
       this.openDialog(this.newAsset.asset_name);
       this.fetchAssetDetails()
-      this.resetForm();
 
-      this.newAsset = {
-        asset_id: 1,
-        asset_name: '',
-        asset_category_id: 1,
-        asset_type_id: 1,
-        asset_url: ''
-      }
     }
     else {
       this.openErrorDialog();
@@ -138,7 +130,7 @@ export class EditAssetComponent {
   }
 
   openDialog(asset_name: string): void {
-    const dialogRef = this.dialog.open(SaveAssetDialog, {
+    const dialogRef = this.dialog.open(EditSaveAssetDialog, {
       data: { asset_name: asset_name}
     });
 
@@ -155,5 +147,32 @@ export class EditAssetComponent {
     dialogRef.afterClosed().subscribe(result => {
     });
     this.editAssetForm.reset();
+  }
+}
+
+
+@Component({
+  selector: 'edit-save-asset-dialog',
+  templateUrl: 'edit-save-asset-dialog.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+    CommonModule,
+    NgIf,
+    RouterLink
+  ],
+})
+
+export class EditSaveAssetDialog {
+  readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {asset_name: string}){}
+
+  onClick(): void {
+    this.dialogRef.close();
   }
 }

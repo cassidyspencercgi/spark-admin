@@ -78,29 +78,40 @@ export class CreateAssetComponent {
     if (this.addAssetForm.valid) {
       let categoryId = await this.categoryService.getIdbyName(this.addAssetForm.get('asset_category')?.value);
       let typeId = await this.typeService.getIdbyName(this.addAssetForm.get('asset_type')?.value);
-            
-      this.newAsset = {
-        asset_id: -1,
-        asset_name: this.addAssetForm.get('name')?.value,
-        asset_category_id: categoryId,
-        asset_type_id: typeId,
-        asset_url: this.addAssetForm.get('asset_url')?.value
-      }
-      await this.service.createAsset(this.newAsset);
+      let typeRegex = await this.typeService.getRegexById(typeId);   
 
-      this.openDialog(this.newAsset.asset_name);
-      this.addAssetForm.reset();
+      if(this.isRegexValid(this.addAssetForm.get('asset_url')?.value, typeRegex)) {
+        this.newAsset = {
+          asset_id: -1,
+          asset_name: this.addAssetForm.get('name')?.value,
+          asset_category_id: categoryId,
+          asset_type_id: typeId,
+          asset_url: this.addAssetForm.get('asset_url')?.value
+        }
 
-      this.newAsset = {
-        asset_id: 1,
-        asset_name: '',
-        asset_category_id: 1,
-        asset_type_id: 1,
-        asset_url: ''
+        let response = await this.service.createAsset(this.newAsset);
+        if(response === "ok"){
+
+          this.openDialog(this.newAsset.asset_name);
+          this.addAssetForm.reset();
+
+          this.newAsset = {
+            asset_id: 1,
+            asset_name: '',
+            asset_category_id: 1,
+            asset_type_id: 1,
+            asset_url: ''
+          }
+        }
+        else {
+          this.openErrorDialog("Error Adding Asset. Message: " + response)
+        }
       }
-    }
-    else {
-      this.openErrorDialog();
+      else {
+        this.openErrorDialog("Invalid URL!");
+      }
+    } else {
+      this.openErrorDialog("Error saving asset. Please make sure all fields are complete and correct.");
     }
   }
 
@@ -114,14 +125,19 @@ export class CreateAssetComponent {
     this.addAssetForm.reset(); 
   }
 
-  openErrorDialog(): void {
+  openErrorDialog(message: string): void {
     const dialogRef = this.dialog.open(ErrorDialog, {
-      data: {}
+      data: { message: message}
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
     this.addAssetForm.reset();
+  }
+
+  isRegexValid(assetUrl: string, assetRegex: string): boolean {
+    const regex = new RegExp(assetRegex);
+    return regex.test(assetUrl)
   }
 }
 
@@ -136,7 +152,8 @@ export class CreateAssetComponent {
     MatDialogClose,
     MatButtonModule,
     CommonModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
 })
 
@@ -144,8 +161,8 @@ export class SaveAssetDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {asset_name: string}){}
-  
-  onOkClick(): void {
+
+  onClick(): void {
     this.dialogRef.close();
   }
 }
@@ -168,6 +185,8 @@ export class SaveAssetDialog {
 export class ErrorDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
   
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {message: string}){}
+
   onOkClick(): void {
     this.dialogRef.close();
   }

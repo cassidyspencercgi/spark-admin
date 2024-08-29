@@ -7,15 +7,20 @@
 /* General Styling */
 h1 {
     font-family: Sans-Serif;
-    text-align: center;
     margin-bottom: 5px;
     margin-top: 5px;
-    font-size: 2.5rem;
+    font-size: 2rem;
+    padding-left: 30px;
+    font-weight: bold;
+    margin-right: auto;
 }
 
 /* Section Styling */
 section {
-    margin-bottom: 30px;
+    display: flex; /* Enable flexbox on the section */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 /* Button Styling */
@@ -25,12 +30,13 @@ button[mat-stroked-button] {
     font-size: 1rem;
     color: white;
     background-color: skyblue;
-    width: 100%;
+    width: auto;
     max-width: 300px;
     height: 50px;
-    margin: 20px auto;
+    margin-left: auto;
     display: block;
     text-align: center;
+    margin-right: 20px;
 }
 
 button[mat-stroked-button]:hover {
@@ -42,6 +48,7 @@ button[mat-stroked-button]:hover {
 
 table {
     width: 100%;
+    margin: 10px;
     border-collapse: collapse;
 }
 
@@ -58,4 +65,10 @@ tr:hover {
 th {
     background-color: #f0f0f0;
     font-weight: bold;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    background-color: green;
 }
