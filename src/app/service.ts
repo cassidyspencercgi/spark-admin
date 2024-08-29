@@ -29,10 +29,10 @@ export class Service {
         return this._token;
     }
     /***********************Asset***********************/
-    async createAsset(newAsset: Asset) {
+    async createAsset(newAsset: Asset) : Promise<String>{
         console.log("createAsset: " + this.baseurl + this.path.ASSET);
         console.log(JSON.stringify(newAsset))
-        fetch(this.baseurl + this.path.ASSET, {
+        const data = await fetch(this.baseurl + this.path.ASSET, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.token}`,
@@ -40,6 +40,17 @@ export class Service {
             },
             body: JSON.stringify(newAsset),
           })
+        if(data.ok)
+        {
+            return "ok";
+        }
+        else if (data.status === 400) {
+            return await data.text()
+        }
+        else {
+            this.router.navigate(['/login']);
+            return "error"
+        }
     }
 
     async getAssets() : Promise<Asset[]> {
