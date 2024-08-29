@@ -89,17 +89,22 @@ export class CreateAssetComponent {
           asset_url: this.addAssetForm.get('asset_url')?.value
         }
 
-        await this.service.createAsset(this.newAsset);
+        let response = await this.service.createAsset(this.newAsset);
+        if(response === "ok"){
 
-        this.openDialog(this.newAsset.asset_name);
-        this.addAssetForm.reset();
+          this.openDialog(this.newAsset.asset_name);
+          this.addAssetForm.reset();
 
-        this.newAsset = {
-          asset_id: 1,
-          asset_name: '',
-          asset_category_id: 1,
-          asset_type_id: 1,
-          asset_url: ''
+          this.newAsset = {
+            asset_id: 1,
+            asset_name: '',
+            asset_category_id: 1,
+            asset_type_id: 1,
+            asset_url: ''
+          }
+        }
+        else {
+          this.openErrorDialog("Error Adding Asset. Message: " + response)
         }
       }
       else {
