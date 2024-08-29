@@ -78,29 +78,37 @@ export class CreateAssetComponent {
     if (this.addAssetForm.valid) {
       let categoryId = await this.categoryService.getIdbyName(this.addAssetForm.get('asset_category')?.value);
       let typeId = await this.typeService.getIdbyName(this.addAssetForm.get('asset_type')?.value);
-            
-      this.newAsset = {
-        asset_id: -1,
-        asset_name: this.addAssetForm.get('name')?.value,
-        asset_category_id: categoryId,
-        asset_type_id: typeId,
-        asset_url: this.addAssetForm.get('asset_url')?.value
-      }
-      await this.service.createAsset(this.newAsset);
+      let typeRegex = await this.typeService.getRegexById(typeId);      
 
-      this.openDialog(this.newAsset.asset_name);
-      this.addAssetForm.reset();
+      if(this.isRegexValid(this.addAssetForm.get('asset_url')?.value, typeRegex)) {
+        this.newAsset = {
+          asset_id: -1,
+          asset_name: this.addAssetForm.get('name')?.value,
+          asset_category_id: categoryId,
+          asset_type_id: typeId,
+          asset_url: this.addAssetForm.get('asset_url')?.value
+        }
 
-      this.newAsset = {
-        asset_id: 1,
-        asset_name: '',
-        asset_category_id: 1,
-        asset_type_id: 1,
-        asset_url: ''
+        await this.service.createAsset(this.newAsset);
+
+        this.openDialog(this.newAsset.asset_name);
+        this.addAssetForm.reset();
+
+        this.newAsset = {
+          asset_id: 1,
+          asset_name: '',
+          asset_category_id: 1,
+          asset_type_id: 1,
+          asset_url: ''
+        }
       }
-    }
-    else {
+      else {
+        this.openErrorDialog();
+        console.log('invalid url');
+      }
+    } else {
       this.openErrorDialog();
+      console.log('invalid form')
     }
   }
 
@@ -122,6 +130,12 @@ export class CreateAssetComponent {
     dialogRef.afterClosed().subscribe(result => {
     });
     this.addAssetForm.reset();
+  }
+
+  isRegexValid(assetUrl: string, assetRegex: string): boolean {
+    const regex = new RegExp(assetRegex);
+    console.log(regex);
+    return regex.test(assetUrl)
   }
 }
 
