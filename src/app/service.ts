@@ -244,8 +244,8 @@ export class Service {
 
         /***********************User***********************/
         async getUsers() : Promise<User[]> {
-            console.log("getUsers: " + this.baseurl + this.path.User);
-            const data = await fetch(this.baseurl + this.path.ASSET,
+            console.log("getUsers: " + this.baseurl + this.path.USER);
+            const data = await fetch(this.baseurl + this.path.USER,
                 {
                 method: 'GET',
                 headers: {

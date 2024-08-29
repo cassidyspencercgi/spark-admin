@@ -5,7 +5,6 @@
 
 <section>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-        <img src="../../assets/cat.png">
         <ng-container matColumnDef="asset_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
             <td mat-cell *matCellDef="let asset">{{asset['asset_name']}}</td>
