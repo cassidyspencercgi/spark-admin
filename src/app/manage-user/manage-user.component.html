@@ -6,8 +6,9 @@
 
 <div>
     <section class="filter">
-    <h2>Filter</h2>
-    <p>this will have filter options</p>
+        <h2>Filter</h2>
+        <mat-checkbox [(ngModel)]="enabledChecked" (change)="applyFilter()">Enabled</mat-checkbox>
+        <mat-checkbox [(ngModel)]="disabledChecked" (change)="applyFilter()">Disabled</mat-checkbox>
     </section>
     <section class="tableSection">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">

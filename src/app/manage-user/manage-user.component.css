@@ -30,6 +30,8 @@ div {
 }
 .filter {
     padding-left: 300px;
+    display: flex;
+    flex-direction: column;
 }
 /* Section Styling */
 .title {
@@ -106,3 +108,7 @@ img {
     height: 100%;
     box-sizing: border-box;
 }*/
+
+.mdc-checkbox__native-control mdc-checkbox--selected {
+    background-color: green;
+}
