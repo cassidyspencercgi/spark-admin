@@ -109,6 +109,12 @@ img {
     box-sizing: border-box;
 }*/
 
-.mdc-checkbox__native-control mdc-checkbox--selected {
-    background-color: green;
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #2ec82b !important; /* Change this to your desired color */
+}
+
+/* Optional: Change the checkmark color */
+::ng-deep .mat-checkbox-checked .mat-checkbox-checkmark-path {
+  stroke: #ffffff !important; /* Change this to your desired color */
 }
