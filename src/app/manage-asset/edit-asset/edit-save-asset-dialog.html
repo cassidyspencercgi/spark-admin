@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Asset Saved</h2>
+<mat-dialog-content>
+  <p>Name:</p>
+  <p *ngIf="data?.asset_name">{{ data.asset_name }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="onClick()" [routerLink]="['/home/assets']">Done</button>
+  <button mat-stroked-button (click)="onClick()">Keep Editing</button>
+</mat-dialog-actions>
