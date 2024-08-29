@@ -78,7 +78,7 @@ export class CreateAssetComponent {
     if (this.addAssetForm.valid) {
       let categoryId = await this.categoryService.getIdbyName(this.addAssetForm.get('asset_category')?.value);
       let typeId = await this.typeService.getIdbyName(this.addAssetForm.get('asset_type')?.value);
-      let typeRegex = await this.typeService.getRegexById(typeId);      
+      let typeRegex = await this.typeService.getRegexById(typeId);   
 
       if(this.isRegexValid(this.addAssetForm.get('asset_url')?.value, typeRegex)) {
         this.newAsset = {
@@ -103,12 +103,10 @@ export class CreateAssetComponent {
         }
       }
       else {
-        this.openErrorDialog();
-        console.log('invalid url');
+        this.openErrorDialog("Invalid URL!");
       }
     } else {
-      this.openErrorDialog();
-      console.log('invalid form')
+      this.openErrorDialog("Error saving asset. Please make sure all fields are complete and correct.");
     }
   }
 
@@ -122,9 +120,9 @@ export class CreateAssetComponent {
     this.addAssetForm.reset(); 
   }
 
-  openErrorDialog(): void {
+  openErrorDialog(message: string): void {
     const dialogRef = this.dialog.open(ErrorDialog, {
-      data: {}
+      data: { message: message}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -134,7 +132,6 @@ export class CreateAssetComponent {
 
   isRegexValid(assetUrl: string, assetRegex: string): boolean {
     const regex = new RegExp(assetRegex);
-    console.log(regex);
     return regex.test(assetUrl)
   }
 }
@@ -183,6 +180,8 @@ export class SaveAssetDialog {
 export class ErrorDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
   
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {message: string}){}
+
   onOkClick(): void {
     this.dialogRef.close();
   }

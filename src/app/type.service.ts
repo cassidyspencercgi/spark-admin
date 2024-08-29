@@ -30,7 +30,6 @@ export class TypeService {
     getRegexById(id: number) : Promise<string> {
         return this.service.getType(id).then((t: AssetType) => {
             let regex = t.asset_type_url_regex;
-            console.log(id);
             return regex;
         })
     }
