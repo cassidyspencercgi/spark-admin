@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>Error</h2>
+<mat-dialog-content>
+  <p *ngIf="data?.message">{{ data.message }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="onOkClick()" [mat-dialog-close]="" cdkFocusInitial>Okay</button>
+</mat-dialog-actions>
