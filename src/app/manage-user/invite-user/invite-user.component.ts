@@ -23,7 +23,8 @@ import { HttpStatusCode } from '@angular/common/http';
             MatFormFieldModule,
             ReactiveFormsModule,
             MatInputModule,
-            NgIf],
+            NgIf,
+            CommonModule],
   templateUrl: './invite-user.component.html',
   styleUrl: './invite-user.component.css'
 })
@@ -71,8 +72,10 @@ export class InviteUserComponent {
       this.newUser.app_user_id = Number(JSON.parse(response).user_id);
       console.log(this.newUser);
       this.service.updateRootUser(this.newUser.app_user_id, this.newUser);
-        this.addUserForm.reset();
-        console.log('saved user: ' + JSON.parse(response).user_id);  
+      this.addUserForm.reset();
+      console.log('saved user: ' + JSON.parse(response).user_id);  
+
+      this.openSaveDialog(this.newUser.app_user_name, this.newUser.app_user_email, "password");
            
         } catch(e) {
           if(e instanceof Error)
@@ -86,6 +89,16 @@ export class InviteUserComponent {
   }
 }
 
+
+openSaveDialog(pName: String, pEmail: String, pPassword: String): void {
+  const dialogRef = this.dialog.open(UserSavedDialog, {
+    data: { name: pName,
+            email: pEmail,
+            password: pPassword }
+  }
+  )
+}
+
 openErrorDialog(message: string): void {
   const dialogRef = this.dialog.open(ErrorDialog, {
     data: { message: message}
@@ -96,4 +109,36 @@ openErrorDialog(message: string): void {
   this.addUserForm.reset();
 }
 
+}
+
+@Component({
+  selector: 'save-user-dialog',
+  templateUrl: 'save-user-dialog.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+    CommonModule,
+    NgIf,
+    RouterLink
+  ],
+})
+
+export class UserSavedDialog {
+  readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String}){}
+
+  getMailtoLink(): string {
+    const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
+                  `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in.`
+                  + `\n\nThanks for trying out this app!`;
+    return `mailto:${this.data.email}?subject=${encodeURIComponent("Welcome to Spark!")}&body=${encodeURIComponent(body)}`;
+  }
+  onClick(): void {
+    this.dialogRef.close();
+  }
 }

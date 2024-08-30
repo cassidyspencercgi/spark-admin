@@ -63,3 +63,22 @@ button[routerLink] {
 button[routerLink]:hover {
     color: rgb(9, 163, 214);
 }
+
+.user_info {
+    margin: 10px;
+}
+a {
+    font-family: Sans-Serif;
+    color: deepskyblue;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 20px;
+    display: inline-block;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+a:hover {
+    color: rgb(9, 163, 214);
+    border-bottom: 2px solid rgb(9, 163, 214);
+}
