@@ -31,6 +31,7 @@ export class ManageUserComponent {
 
   displayedColumns: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled'];
   dataSource = new MatTableDataSource<User>();
+  dataSourcePending = new MatTableDataSource<User>();
   
   enabledChecked = true;
   disabledChecked = true;
@@ -38,16 +39,21 @@ export class ManageUserComponent {
   ngOnInit(): void {
     this.service.getUsers().then((users: User[]) => {
       this.users = users;
-      this.dataSource.data = users;
       this.applyFilter();
     });
   }
 
   applyFilter(): void {
     this.dataSource.data = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false;
       return enabledFilter || disabledFilter;
     });
+    this.dataSourcePending.data = this.users.filter((user: User) => {
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu;
+      return enabledFilter || disabledFilter;
+    });
+   
   }
 }

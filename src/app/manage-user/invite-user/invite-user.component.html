@@ -1,0 +1,25 @@
+<h1>Invite New User</h1>
+
+<form [formGroup]="addUserForm" (ngSubmit)="submitUser()">
+    <section>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input name="app_user_name" matInput formControlName="app_user_name">
+            <mat-error *ngIf="addUserForm.get('app_user_name')?.invalid && addUserForm.get('app_user_name')?.touched">
+                Name is required.
+              </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="app_user_email" matInput formControlName="app_user_email">
+            <mat-error *ngIf="addUserForm.get('app_user_email')?.invalid && addUserForm.get('app_user_email')?.touched">
+                Email is required.
+              </mat-error>
+        </mat-form-field>
+
+    </section>
+
+    <button mat-stroked-button type="submit">Invite</button>
+    <button mat-stroked-button [routerLink]="['/home/users']">Cancel</button>
+</form>

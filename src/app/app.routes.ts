@@ -5,6 +5,7 @@ import { ManageAssetComponent } from './manage-asset/manage-asset.component';
 import { LoginComponent } from './login/login.component';
 import { EditAssetComponent } from './manage-asset/edit-asset/edit-asset.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
+import { InviteUserComponent } from './manage-user/invite-user/invite-user.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,10 @@ export const routes: Routes = [
         {
             path: 'users',
             component: ManageUserComponent
+        },
+        {
+            path: 'users/invite',
+            component: InviteUserComponent
         }
         ],
         title : 'Home Page'
