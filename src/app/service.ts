@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { PathVariables } from "./path.variables";
 import { Category } from "./category";
 import { AssetType } from "./asset.type";
+import { User } from "./user";
 @Injectable({
     providedIn: 'root'
 })
@@ -28,10 +29,10 @@ export class Service {
         return this._token;
     }
     /***********************Asset***********************/
-    async createAsset(newAsset: Asset) {
+    async createAsset(newAsset: Asset) : Promise<String>{
         console.log("createAsset: " + this.baseurl + this.path.ASSET);
         console.log(JSON.stringify(newAsset))
-        fetch(this.baseurl + this.path.ASSET, {
+        const data = await fetch(this.baseurl + this.path.ASSET, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.token}`,
@@ -39,6 +40,17 @@ export class Service {
             },
             body: JSON.stringify(newAsset),
           })
+        if(data.ok)
+        {
+            return "ok";
+        }
+        else if (data.status === 400) {
+            return await data.text()
+        }
+        else {
+            this.router.navigate(['/login']);
+            return "error"
+        }
     }
 
     async getAssets() : Promise<Asset[]> {
@@ -240,4 +252,25 @@ export class Service {
                 throw new Error(`Failed to authorize`);
             } 
     }
+
+        /***********************User***********************/
+        async getUsers() : Promise<User[]> {
+            console.log("getUsers: " + this.baseurl + this.path.USER);
+            const data = await fetch(this.baseurl + this.path.USER,
+                {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json'
+                }
+                }
+            );
+            if (data.ok) {
+                return data.json();
+            } else {
+                this.router.navigate(['/login']);
+                throw new Error(`Error in get assets function`);
+            }
+        }        
+
 }

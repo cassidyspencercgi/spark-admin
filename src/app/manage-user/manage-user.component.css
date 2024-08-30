@@ -1,0 +1,134 @@
+
+.trashcan {
+    cursor: pointer;
+    height: 13px;
+    padding: 0px;
+}
+/* General Styling */
+h1 {
+    font-family: Sans-Serif;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 2rem;
+    padding-left: 300px;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+h2 {
+    font-family: Sans-Serif;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+div {
+    display: flex; /* Enable flexbox on the section */
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.filter {
+    padding-left: 300px;
+    display: flex;
+    flex-direction: column;
+}
+/* Section Styling */
+.title {
+    display: flex; /* Enable flexbox on the section */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between;
+    margin-bottom: 45px;
+}
+
+
+
+.tableSection {
+    width: auto;
+    margin-right: 350px;
+    margin-left: auto;
+}
+
+/* Button Styling */
+button[mat-stroked-button] {
+    border-radius: 5px;
+    border: 2px solid #007ACC;
+    font-size: 1rem;
+    color: white;
+    background-color: skyblue;
+    width: auto;
+    max-width: 300px;
+    height: 50px;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+    margin-right: 350px;
+}
+
+button[mat-stroked-button]:hover {
+    border-color: rgb(9, 163, 214);
+    background-color: rgb(91, 188, 227);
+}
+
+
+
+table {
+    width: 100%;
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px 75px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #E0EFF9;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+img {
+    width: 25px;
+    height: auto;
+    padding-right: 10px;
+}
+/*
+.profile {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    background-color: red;
+    width: 100%;  
+    height: 100%;
+    box-sizing: border-box;
+}*/
+
+/* ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #2ec82b !important; 
+}
+ */
+/* 
+.mat-checkbox-checked .mat-checkbox-checkmark-path {
+  stroke: #ffffff !important;
+} */
+
+
+.mat-accent.mat-mdc-checkbox {
+    --mdc-checkbox-selected-pressed-icon-color: rgb(106, 200, 238);
+    --mdc-checkbox-selected-checkmark-color: #ffffff;
+    --mdc-checkbox-selected-focus-icon-color: rgb(106, 200, 238);;
+    --mdc-checkbox-selected-hover-icon-color: rgb(104, 168, 194);
+    --mdc-checkbox-selected-icon-color: skyblue;
+    --mdc-checkbox-selected-focus-state-layer-color: rgb(106, 200, 238);;
+    --mdc-checkbox-selected-hover-state-layer-color:rgb(104, 168, 194);
+    --mdc-checkbox-unselected-pressed-state-layer-color: rgb(104, 168, 194);
+    --mat-checkbox-disabled-label-color: rgba(26, 27, 31, 0.38);
+    --mat-checkbox-label-text-color: #1a1b1f;
+}
