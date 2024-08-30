@@ -27,12 +27,9 @@
                 <ng-container matColumnDef="app_user_enabled">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let app_user"> 
-                        <ng-container *ngIf="app_user['app_user_enabled'] === true; else disabled">
-                        Enabled
-                      </ng-container>
-                      <ng-template #disabled>
-                        Disabled
-                      </ng-template></td>
+                        <mat-slide-toggle [(ngModel)]="app_user.app_user_enabled" (change)="onToggleUserStatus(app_user)">
+                            {{ app_user.app_user_enabled ? 'Enabled' : 'Disabled' }}
+                          </mat-slide-toggle></td>
                 </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -55,12 +52,10 @@
                 <ng-container matColumnDef="app_user_enabled">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let app_user"> 
-                        <ng-container *ngIf="app_user['app_user_enabled'] === true; else disabled">
-                        Enabled
-                      </ng-container>
-                      <ng-template #disabled>
-                        Disabled
-                      </ng-template></td>
+                      <mat-slide-toggle [(ngModel)]="app_user.app_user_enabled" (change)="onToggleUserStatus(app_user)">
+                        {{ app_user.app_user_enabled ? 'Enabled' : 'Disabled' }}
+                      </mat-slide-toggle>
+                    </td>
                 </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
