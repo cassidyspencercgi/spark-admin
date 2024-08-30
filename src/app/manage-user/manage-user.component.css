@@ -1,4 +1,5 @@
 
+
 .trashcan {
     cursor: pointer;
     height: 13px;
@@ -10,9 +11,9 @@ h1 {
     margin-bottom: 5px;
     margin-top: 5px;
     font-size: 2rem;
-    padding-left: 300px;
+    /* padding-left: 300px; */
     font-weight: bold;
-    margin-right: auto;
+    /* margin-right: auto; */
 }
 
 h2 {
@@ -20,33 +21,38 @@ h2 {
     margin-bottom: 5px;
     font-size: 1.5rem;
     font-weight: bold;
-    margin-right: auto;
+    /* margin-right: auto; */
 }
 
 div {
-    display: flex; /* Enable flexbox on the section */
+    display: flex; 
     justify-content: space-between;
     margin-bottom: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10rem;
 }
 .filter {
-    padding-left: 300px;
+    /* padding-left: 300px; */
     display: flex;
     flex-direction: column;
 }
 /* Section Styling */
 .title {
-    display: flex; /* Enable flexbox on the section */
-    align-items: center; /* Align items vertically in the center */
-    justify-content: space-between;
-    margin-bottom: 45px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 38rem;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 
 
 .tableSection {
     width: auto;
-    margin-right: 350px;
-    margin-left: auto;
+    /* margin-right: 350px; */
+    /* margin-left: auto; */
 }
 
 /* Button Styling */
@@ -59,10 +65,10 @@ button[mat-stroked-button] {
     width: auto;
     max-width: 300px;
     height: 50px;
-    margin-left: auto;
+    /* margin-left: auto; */
     display: block;
     text-align: center;
-    margin-right: 350px;
+    /* margin-right: 350px; */
 }
 
 button[mat-stroked-button]:hover {
