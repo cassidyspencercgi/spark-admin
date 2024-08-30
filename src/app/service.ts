@@ -271,6 +271,53 @@ export class Service {
                 this.router.navigate(['/login']);
                 throw new Error(`Error in get assets function`);
             }
-        }        
+        }
+        
+        async createUser(newUser: User) : Promise<string>{
+            console.log("createUser: " + this.baseurl + this.path.USER);
+            console.log(JSON.stringify(newUser))
+            const data = await fetch(this.baseurl + this.path.USER, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+              })
+            if(data.ok)
+            {
+                return data.text();
+            }
+            else if (data.status === 401 || data.status === 403) {
+                this.router.navigate(['/login'])
+                return "unauthorized";
+            }
+            else {
+                this.router.navigate(['/users/invite']);
+                throw new Error(await data.text());
+            }
+        }
+
+        async updateRootUser(rootId: number, user: User) {
+            console.log("update root user: " + rootId)
+            const data = await fetch(this.baseurl + this.path.USER + "?root_user_id=" + rootId, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+              });
+              if (data.ok) {
+                return data.json();
+            }
+            else if (data.status === 401 || data.status === 403) {
+                this.router.navigate(['/login'])
+            } 
+            else {
+                this.router.navigate(['/users/invite']);
+                throw new Error(await data.text());
+            }
+        }
 
 }
