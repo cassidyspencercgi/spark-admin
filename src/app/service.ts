@@ -320,4 +320,28 @@ export class Service {
             }
         }
 
+        async updateUser(user: User) {
+            console.log("update root user: " + this.baseurl + this.path.USER + user.app_user_id)
+            const data = await fetch(this.baseurl + this.path.USER + user.app_user_id, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+              });
+              if (data.ok) {
+                return data.json();
+            }
+            else if (data.status === 401 || data.status === 403) {
+                this.router.navigate(['/login'])
+            } 
+            else {
+                this.router.navigate(['/users']);
+                throw new Error(await data.text());
+            }
+        }
+    
+
+
 }

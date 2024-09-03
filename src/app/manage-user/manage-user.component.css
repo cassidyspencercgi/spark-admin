@@ -76,7 +76,9 @@ button[mat-stroked-button]:hover {
     background-color: rgb(91, 188, 227);
 }
 
-
+.pendingUser {
+    margin-top: 2rem;
+}
 
 table {
     width: 100%;

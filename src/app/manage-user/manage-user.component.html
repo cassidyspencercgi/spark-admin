@@ -36,7 +36,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-        <h2>Pending Users</h2>
+        <h2 class = "pendingUser">Pending Users</h2>
         <table mat-table [dataSource]="dataSourcePending" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="app_user_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>

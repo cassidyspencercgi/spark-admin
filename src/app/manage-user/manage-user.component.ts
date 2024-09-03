@@ -66,11 +66,15 @@ export class ManageUserComponent {
     }
   }
   
-  enableUser(user: any) {
+  enableUser(user: User) {
+    user.app_user_enabled = true;
+    this.service.updateUser(user)
     console.log("enabled");
   }
   
-  disableUser(user: any) {
+  disableUser(user: User) {
+    user.app_user_enabled = false;
+    this.service.updateUser(user)
     console.log("disabled");
   }
 }
