@@ -5,15 +5,12 @@
     height: 13px;
     padding: 0px;
 }
-/* General Styling */
 h1 {
     font-family: Sans-Serif;
     margin-bottom: 5px;
     margin-top: 5px;
     font-size: 2rem;
-    /* padding-left: 300px; */
     font-weight: bold;
-    /* margin-right: auto; */
 }
 
 h2 {
@@ -21,59 +18,39 @@ h2 {
     margin-bottom: 5px;
     font-size: 1.5rem;
     font-weight: bold;
-    /* margin-right: auto; */
 }
 
 div {
     display: flex; 
     justify-content: space-between;
     margin-bottom: 20px;
-    justify-content: center;
     align-items: flex-start;
-    gap: 10rem;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 .filter {
-    /* padding-left: 300px; */
     display: flex;
     flex-direction: column;
+    padding-right: 2rem;
 }
-/* Section Styling */
 .title {
     display: flex; 
     align-items: center; 
-    justify-content: center;
-    gap: 38rem;
     padding-top: 30px;
     padding-bottom: 30px;
+    margin-right: 10%;
+    margin-left: 10%;
 }
-
 
 
 .tableSection {
     width: auto;
-    /* margin-right: 350px; */
-    /* margin-left: auto; */
 }
 
-/* Button Styling */
 button[mat-stroked-button] {
-    border-radius: 5px;
-    border: 2px solid #007ACC;
-    font-size: 1rem;
-    color: white;
-    background-color: skyblue;
-    width: auto;
-    max-width: 300px;
-    height: 50px;
-    /* margin-left: auto; */
     display: block;
     text-align: center;
-    /* margin-right: 350px; */
-}
-
-button[mat-stroked-button]:hover {
-    border-color: rgb(9, 163, 214);
-    background-color: rgb(91, 188, 227);
+    margin-left: auto;
 }
 
 .pendingUser {
@@ -84,6 +61,7 @@ table {
     width: 100%;
     margin: 10px;
     border-collapse: collapse;
+    word-wrap: normal;
 }
 
 th, td {
@@ -91,6 +69,12 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+@media screen and (max-width: 1050px) {
+    th, td {
+        padding: 5px 30px; /* Further reduce padding on small screens */
+    }
+}
+
 
 tr:hover {
     background-color: #E0EFF9;
@@ -106,26 +90,26 @@ img {
     height: auto;
     padding-right: 10px;
 }
-/*
-.profile {
-    display: flex; 
-    align-items: center;
-    justify-content: space-between;
-    background-color: red;
-    width: 100%;  
-    height: 100%;
-    box-sizing: border-box;
-}*/
 
-/* ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #2ec82b !important; 
+.resend {
+    background-color: skyblue;
+    color: white;
+    border-radius: 8px;
+    padding: 7px 8px;
+    height: 100%;
+    font-size: 14px;
+    text-transform: none;
+    min-width: auto;
+    box-shadow: none;
+    border: none;
+    white-space: nowrap;
+    font-weight: bold;
 }
- */
-/* 
-.mat-checkbox-checked .mat-checkbox-checkmark-path {
-  stroke: #ffffff !important;
-} */
+
+.resend:hover {
+    background-color: #44A4DC;
+    cursor: pointer;
+}
 
 
 .mat-accent.mat-mdc-checkbox {
