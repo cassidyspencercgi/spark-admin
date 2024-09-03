@@ -76,7 +76,9 @@ button[mat-stroked-button]:hover {
     background-color: rgb(91, 188, 227);
 }
 
-
+.pendingUser {
+    margin-top: 2rem;
+}
 
 table {
     width: 100%;
@@ -137,4 +139,22 @@ img {
     --mdc-checkbox-unselected-pressed-state-layer-color: rgb(104, 168, 194);
     --mat-checkbox-disabled-label-color: rgba(26, 27, 31, 0.38);
     --mat-checkbox-label-text-color: #1a1b1f;
+}
+
+.mat-accent.mat-mdc-slide-toggle {
+    --mdc-switch-selected-focus-state-layer-color: skyblue;
+    --mdc-switch-selected-handle-color: #ffffff;
+    --mdc-switch-selected-hover-state-layer-color: skyblue;
+    --mdc-switch-selected-pressed-state-layer-color: skyblue;
+    --mdc-switch-selected-focus-handle-color: #e0faff;
+    --mdc-switch-selected-hover-handle-color: #e0faff;
+    --mdc-switch-selected-pressed-handle-color: #e0faff;
+    --mdc-switch-selected-focus-track-color: skyblue;
+    --mdc-switch-selected-hover-track-color: skyblue;
+    --mdc-switch-selected-pressed-track-color: skyblue;
+    --mdc-switch-selected-track-color: skyblue;
+    --mdc-switch-selected-icon-color: skyblue;
+    --mat-switch-track-outline-color: #74777f;
+    --mat-switch-disabled-unselected-track-outline-color: #1a1b1f;
+    --mat-switch-label-text-color: #1a1b1f;
 }

@@ -34,6 +34,8 @@ export class InviteUserComponent {
   readonly dialog = inject(MatDialog);
   addUserForm: FormGroup;
 
+  password: String = '';
+
   newUser: User = {
     "app_user_id": 1,
     "app_user_email": '',
@@ -55,6 +57,9 @@ export class InviteUserComponent {
 
   async submitUser() {
     if (this.addUserForm.valid) {
+     
+      this.generatePassword();
+      console.log(this.password);
       this.newUser = {
         app_user_id: -1,
         app_user_email: this.addUserForm.get('app_user_email')?.value,
@@ -62,8 +67,8 @@ export class InviteUserComponent {
         app_user_ftu: true,
         app_user_enabled: true,
         app_user_parent_passcode: '1234',
-        app_user_password: 'pass', //generate later
-        app_user_root_user_id: undefined, //???????
+        app_user_password: this.password,
+        app_user_root_user_id: undefined, 
         app_user_type: 1
       }
 
@@ -71,11 +76,12 @@ export class InviteUserComponent {
       let response = await this.service.createUser(this.newUser);
       this.newUser.app_user_id = Number(JSON.parse(response).user_id);
       console.log(this.newUser);
-      this.service.updateRootUser(this.newUser.app_user_id, this.newUser);
+      this.newUser.app_user_root_user_id = this.newUser.app_user_id;
+      this.service.updateUser(this.newUser);
       this.addUserForm.reset();
       console.log('saved user: ' + JSON.parse(response).user_id);  
 
-      this.openSaveDialog(this.newUser.app_user_name, this.newUser.app_user_email, "password");
+      this.openSaveDialog(this.newUser.app_user_name, this.newUser.app_user_email, this.password);
            
         } catch(e) {
           if(e instanceof Error)
@@ -109,6 +115,10 @@ openErrorDialog(message: string): void {
   this.addUserForm.reset();
 }
 
+generatePassword(): void {
+  this.password = Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+
+}
 }
 
 @Component({

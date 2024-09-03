@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Service } from '../service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-manage-user',
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule, 
     MatSortModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule
   ],
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.css']
@@ -54,6 +56,25 @@ export class ManageUserComponent {
       const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu;
       return enabledFilter || disabledFilter;
     });
-   
+  }
+
+  onToggleUserStatus(app_user: any) {
+    if (app_user.app_user_enabled) {
+      this.enableUser(app_user);
+    } else {
+      this.disableUser(app_user);
+    }
+  }
+  
+  enableUser(user: User) {
+    user.app_user_enabled = true;
+    this.service.updateUser(user)
+    console.log("enabled");
+  }
+  
+  disableUser(user: User) {
+    user.app_user_enabled = false;
+    this.service.updateUser(user)
+    console.log("disabled");
   }
 }
