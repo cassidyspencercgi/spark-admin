@@ -8,6 +8,8 @@ import { Service } from '../service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { InviteUserComponent } from './invite-user/invite-user.component';
+import { InviteUserService } from './invite-user-service';
 
 @Component({
   selector: 'app-manage-user',
@@ -20,16 +22,19 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatButtonModule, 
     MatCheckboxModule,
     FormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    InviteUserComponent
   ],
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.css']
 })
 export class ManageUserComponent {
   service: Service = inject(Service);
+  inviteUserService: InviteUserService = inject(InviteUserService);
   users: User[] = [];
 
   displayedColumns: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled'];
+  displayedColumnsPending: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled','resend_email'];
   dataSource = new MatTableDataSource<User>();
   dataSourcePending = new MatTableDataSource<User>();
   
@@ -69,6 +74,12 @@ export class ManageUserComponent {
     } else {
       this.disableUser(app_user);
     }
+  }
+
+  onResend(user: User) {
+    user.app_user_password = this.inviteUserService.generatePassword();
+    this.inviteUserService.openSaveDialog(user.app_user_name, user.app_user_email, user.app_user_password, "New Login");
+    this.service.updateUser(user);
   }
   
   enableUser(user: User) {

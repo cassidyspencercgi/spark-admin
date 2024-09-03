@@ -5,14 +5,13 @@ h1 {
     margin-top: 30px;
     margin-bottom: 30px;
     font-size: 3rem;
-    color: #007ACC; /* Spark blue */
+    color: #007ACC; 
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Optional: Adding a border below the header */
 h1::after {
     content: '';
     display: block;
