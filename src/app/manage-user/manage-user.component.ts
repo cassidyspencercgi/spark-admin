@@ -49,16 +49,23 @@ export class ManageUserComponent {
   }
 
   applyFilter(): void {
-    this.dataSource.data = this.users.filter((user: User) => {
+    const filteredUsers = this.users.filter((user: User) => {
       const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false;
       const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false;
       return enabledFilter || disabledFilter;
     });
-    this.dataSourcePending.data = this.users.filter((user: User) => {
+    
+    const filteredPendingUsers = this.users.filter((user: User) => {
       const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu;
       const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu;
       return enabledFilter || disabledFilter;
     });
+
+    const sortedData = filteredUsers.sort((a, b) => a.app_user_id - b.app_user_id);
+    const sortedPendingData = filteredPendingUsers.sort((a, b) => a.app_user_id - b.app_user_id);
+
+    this.dataSource.data = sortedData;
+    this.dataSourcePending.data = sortedPendingData;
   }
 
   onToggleUserStatus(app_user: any) {

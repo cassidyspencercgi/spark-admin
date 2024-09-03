@@ -4,6 +4,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from "@angular/material/dialog";
 import { RouterLink } from "@angular/router";
 import { SaveAssetDialog } from "../manage-asset/create-asset/create-asset.component";
+import { Clipboard } from "@angular/cdk/clipboard";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +33,7 @@ import { SaveAssetDialog } from "../manage-asset/create-asset/create-asset.compo
   @Component({
     selector: 'save-user-dialog',
     templateUrl: 'save-user-dialog.html',
+    styleUrl: 'save-user-dialog.css',
     standalone: true,
     imports: [
       MatDialogTitle,
@@ -40,14 +43,15 @@ import { SaveAssetDialog } from "../manage-asset/create-asset/create-asset.compo
       MatButtonModule,
       CommonModule,
       NgIf,
-      RouterLink
+      RouterLink,
+      MatTooltipModule
     ],
   })
   
   export class UserSavedDialog {
     readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
   
-    constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String, title: String}){}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String, title: String}, private clipboard: Clipboard){}
   
     getMailtoLink(): string {
       const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
@@ -58,4 +62,10 @@ import { SaveAssetDialog } from "../manage-asset/create-asset/create-asset.compo
     onClick(): void {
       this.dialogRef.close();
     }
+    copyEmail() {
+        const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
+        `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in`
+        + `\n\nThanks for trying out this app!`;
+        this.clipboard.copy(body);
+      }
   }

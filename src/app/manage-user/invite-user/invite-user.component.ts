@@ -11,6 +11,8 @@ import { User } from '../../user';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { ErrorDialog, SaveAssetDialog } from '../../manage-asset/create-asset/create-asset.component';
 import { InviteUserService } from '../invite-user-service';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-invite-user',
@@ -108,8 +110,13 @@ export class InviteUserComponent {
       data: { message: message}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
-    this.addUserForm.reset();
+  dialogRef.afterClosed().subscribe(result => {
+  });
+  this.addUserForm.reset();
+}
+
+generatePassword(): void {
+  this.password = Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { 
+    return x[Math.floor(Math.random() * x.length)] }).join('');
   }
 }
