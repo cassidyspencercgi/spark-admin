@@ -56,13 +56,18 @@ export class InviteUserComponent {
   }
 
   async submitUser() {
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const email = this.addUserForm.get('app_user_email')?.value;
+
     if (this.addUserForm.valid) {
+
+      if(emailRegex.test(email)) {
      
       this.generatePassword();
       console.log(this.password);
       this.newUser = {
         app_user_id: -1,
-        app_user_email: this.addUserForm.get('app_user_email')?.value,
+        app_user_email: email,
         app_user_name: this.addUserForm.get('app_user_name')?.value,
         app_user_ftu: true,
         app_user_enabled: true,
@@ -88,13 +93,16 @@ export class InviteUserComponent {
           this.openErrorDialog("Error Adding User. Message: " + e.message);
           console.log(e);
         }
+      }
+   else {
+    this.openErrorDialog("Invalid email format")
   }
+}
   else {
     console.log('error saving user');
     this.openErrorDialog("Error Adding User");
+    }
   }
-}
-
 
 openSaveDialog(pName: String, pEmail: String, pPassword: String): void {
   const dialogRef = this.dialog.open(UserSavedDialog, {
