@@ -11,6 +11,8 @@ import { User } from '../../user';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { ErrorDialog, SaveAssetDialog } from '../../manage-asset/create-asset/create-asset.component';
 import { HttpStatusCode } from '@angular/common/http';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-invite-user',
@@ -124,14 +126,15 @@ openErrorDialog(message: string): void {
 }
 
 generatePassword(): void {
-  this.password = Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
-
-}
+  this.password = Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { 
+    return x[Math.floor(Math.random() * x.length)] }).join('');
+  }
 }
 
 @Component({
   selector: 'save-user-dialog',
   templateUrl: 'save-user-dialog.html',
+  styleUrl: './save-user-dialog.css',
   standalone: true,
   imports: [
     MatDialogTitle,
@@ -141,14 +144,15 @@ generatePassword(): void {
     MatButtonModule,
     CommonModule,
     NgIf,
-    RouterLink
+    RouterLink,
+    MatTooltipModule,
   ],
 })
 
 export class UserSavedDialog {
   readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String}){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String}, private clipboard: Clipboard){}
 
   getMailtoLink(): string {
     const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
@@ -158,5 +162,12 @@ export class UserSavedDialog {
   }
   onClick(): void {
     this.dialogRef.close();
+  }
+
+  copyEmail() {
+    const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
+    `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in`
+    + `\n\nThanks for trying out this app!`;
+    this.clipboard.copy(body);
   }
 }
