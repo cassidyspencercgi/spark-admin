@@ -1,7 +1,6 @@
 import { Component, inject, NgModule, ViewChild } from '@angular/core';
 import { User } from '../user';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatSort, MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +18,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     RouterOutlet, 
     MatTableModule, 
     MatButtonModule, 
-    MatSortModule,
     MatCheckboxModule,
     FormsModule,
     MatSlideToggleModule
