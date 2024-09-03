@@ -30,36 +30,7 @@ mat-form-field mat-label {
 
 /* Button Styling */
 button[mat-stroked-button] {
-    border-radius: 5px;
-    border: 2px solid #007ACC;
-    font-size: 1rem;
-    color: white;
-    background-color: skyblue;
     width: 100%;
-    max-width: 300px;
-    height: 50px;
     margin-top: 20px;
     text-align: center;
-}
-
-button[mat-stroked-button]:hover {
-    border-color: rgb(9, 163, 214);
-    background-color: rgb(91, 188, 227);
-}
-
-/* Additional Button Style for Return Button */
-button[routerLink] {
-    background-color: transparent;
-    border-color: transparent;
-    color: deepskyblue;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 300px;
-    height: 50px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-button[routerLink]:hover {
-    color: rgb(9, 163, 214);
 }

@@ -3,7 +3,7 @@
     <button mat-stroked-button [routerLink]="['add']">Add a new asset</button>
 </section>
 
-<section>
+<section class = "tableSection">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="asset_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
@@ -39,9 +39,6 @@
                 <a ><img src="../../assets/trashcan.png" alt="trashcan" class="trashcan" (click)="openDialog(asset.asset_id)"></a>
               </td>
         </ng-container>
-
-
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
