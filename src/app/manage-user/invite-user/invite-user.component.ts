@@ -84,7 +84,7 @@ export class InviteUserComponent {
           this.newUser.app_user_id = Number(JSON.parse(response).user_id);
           console.log(this.newUser);
           this.newUser.app_user_root_user_id = this.newUser.app_user_id;
-          this.service.updateUser(this.newUser);
+          this.service.patchUser({"app_user_root_user_id": this.newUser.app_user_root_user_id}, this.newUser.app_user_id);
           this.addUserForm.reset();
           console.log('saved user: ' + JSON.parse(response).user_id);  
 
