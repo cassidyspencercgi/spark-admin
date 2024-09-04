@@ -298,28 +298,6 @@ export class Service {
             }
         }
 
-        async updateRootUser(rootId: number, user: User) {
-            console.log("update root user: " + rootId)
-            const data = await fetch(this.baseurl + this.path.USER + "?root_user_id=" + rootId, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user),
-              });
-              if (data.ok) {
-                return data.json();
-            }
-            else if (data.status === 401 || data.status === 403) {
-                this.router.navigate(['/login'])
-            } 
-            else {
-                this.router.navigate(['/users/invite']);
-                throw new Error(await data.text());
-            }
-        }
-
         async updateUser(user: User) {
             console.log("update root user: " + this.baseurl + this.path.USER + user.app_user_id)
             const data = await fetch(this.baseurl + this.path.USER + user.app_user_id, {
@@ -343,5 +321,25 @@ export class Service {
         }
     
 
-
+        async patchUser(user: any, id: number) {            
+            console.log("patch user: " + this.baseurl + this.path.USER + id)
+            const data = await fetch(this.baseurl + this.path.USER + id, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+              });
+              if (data.ok) {
+                return data.json();
+            }
+            else if (data.status === 401 || data.status === 403) {
+                this.router.navigate(['/login'])
+            } 
+            else {
+                this.router.navigate(['/users']);
+                throw new Error(await data.text());
+            }
+        }
 }

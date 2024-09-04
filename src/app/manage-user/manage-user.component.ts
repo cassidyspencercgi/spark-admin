@@ -79,18 +79,18 @@ export class ManageUserComponent {
   onResend(user: User) {
     user.app_user_password = this.inviteUserService.generatePassword();
     this.inviteUserService.openSaveDialog(user.app_user_name, user.app_user_email, user.app_user_password, "New Login");
-    this.service.updateUser(user);
+    this.service.patchUser({"app_user_password": user.app_user_password}, user.app_user_id);
   }
   
   enableUser(user: User) {
     user.app_user_enabled = true;
-    this.service.updateUser(user)
+    this.service.patchUser({"app_user_enabled": user.app_user_enabled}, user.app_user_id)
     console.log("enabled");
   }
   
   disableUser(user: User) {
     user.app_user_enabled = false;
-    this.service.updateUser(user)
+    this.service.patchUser({"app_user_enabled": user.app_user_enabled}, user.app_user_id)
     console.log("disabled");
   }
 }
