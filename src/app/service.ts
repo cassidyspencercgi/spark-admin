@@ -6,6 +6,9 @@ import { PathVariables } from "./path.variables";
 import { Category } from "./category";
 import { AssetType } from "./asset.type";
 import { User } from "./user";
+import { HttpClient } from "@angular/common/http";
+import { firstValueFrom } from "rxjs";
+
 @Injectable({
     providedIn: 'root'
 })
@@ -16,7 +19,7 @@ export class Service {
     path: PathVariables = inject(PathVariables);
 
    
-     constructor() {
+     constructor(private http: HttpClient) {
         this._token = localStorage.getItem('authToken') || '';
      }
 
@@ -53,23 +56,39 @@ export class Service {
         }
     }
 
-    async getAssets() : Promise<Asset[]> {
+    async getAssets(): Promise<Asset[]> {
         console.log("getAssets: " + this.baseurl + this.path.ASSET);
-        const data = await fetch(this.baseurl + this.path.ASSET,
-            {
-            method: 'GET',
+        try {
+          const response = await firstValueFrom(
+            this.http.get<Asset[]>(this.baseurl + this.path.ASSET, { 
             headers: {
                 'Authorization': `Bearer ${this.token}`,
-                'Content-Type': 'application/json'
-            }
-            }
-        );
-        if (data.ok) {
-            return data.json();
-        } else {
-            this.router.navigate(['/login']);
-            throw new Error(`Error in get assets function`);
+                 'Content-Type': 'application/json'
+            },
+            observe: 'response' })
+          );
+    
+          console.log('Response headers:', response.headers.get("refresh_token"));
+          return response.body || [];
+        } catch (error) {
+          console.error('Error fetching assets:', error);
+          return [];
         }
+        // const data = await fetch(this.baseurl + this.path.ASSET,
+        //     {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Bearer ${this.token}`,
+        //         'Content-Type': 'application/json'
+        //     }
+        //     }
+        // );
+        // if (data.subscribe()) {
+        //     return data.json();
+        // } else {
+        //     this.router.navigate(['/login']);
+        //     throw new Error(`Error in get assets function`);
+        // }
     }
 
     async getAsset(id: number) : Promise<Asset> {
@@ -246,6 +265,7 @@ export class Service {
         });
             if (data.ok) {
                 const response = await data.json();
+                console.log("intiial token: " + response.access_token);
                 return response.access_token;
             } else {
                 this.router.navigate(['/login']);
@@ -256,7 +276,8 @@ export class Service {
         /***********************User***********************/
         async getUsers() : Promise<User[]> {
             console.log("getUsers: " + this.baseurl + this.path.USER);
-            const data = await fetch(this.baseurl + this.path.USER,
+            let data: Response | undefined = new Response; 
+            await fetch(this.baseurl + this.path.USER,
                 {
                 method: 'GET',
                 headers: {
@@ -264,12 +285,15 @@ export class Service {
                     'Content-Type': 'application/json'
                 }
                 }
-            );
+            ).then(e => {
+                data = e;
+                console.log(e.headers.get('refresh_token'))
+            });
             if (data.ok) {
                 return data.json();
             } else {
                 this.router.navigate(['/login']);
-                throw new Error(`Error in get assets function`);
+                throw new Error(`Error in get users function`);
             }
         }
         
