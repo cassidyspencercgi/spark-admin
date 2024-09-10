@@ -5,14 +5,22 @@ import { Service } from './service';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
    const service = inject(Service); 
-   return next(req).pipe(tap(req => {
+   const token = service.token || localStorage.getItem('token') || ''
+
+   const authReq = req.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'  
+      }
+    });
+
+   return next(authReq).pipe(tap(req => {
       if (req.type === HttpEventType.Response) {
-      
          let refresh = req.headers.get("refresh_token")
          if(refresh != null) {
             service.token = refresh;
+            localStorage.setItem('token',refresh);
          }
-
        }
      })
    );

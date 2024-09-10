@@ -39,10 +39,6 @@ export class Service {
               this.http.post<Asset>(this.baseurl + this.path.ASSET, 
                 newAsset,
                 {
-                  headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json'
-                  },
                   observe: 'response',
                 }
               )
@@ -69,15 +65,12 @@ export class Service {
         try {
           const response = await firstValueFrom(
             this.http.get<Asset[]>(this.baseurl + this.path.ASSET, { 
-            headers: {
-                'Authorization': `Bearer ${this.token}`,
-                 'Content-Type': 'application/json'
-            },
             observe: 'response' })
           );
     
           return response.body || [];
         } catch (error) {
+          console.log(this.token);
           console.error('Error fetching assets:', error);
           this.router.navigate(['/login']);
           return [];
@@ -91,10 +84,6 @@ export class Service {
             this.http.get<Asset>(
               this.baseurl + this.path.ASSET + id,
               {
-                headers: {
-                  'Authorization': `Bearer ${this.token}`,
-                  'Content-Type': 'application/json'
-                },
                 observe: 'body'
               }
             )
@@ -116,10 +105,6 @@ export class Service {
                 this.baseurl + this.path.ASSET + id,
                 asset,
                 {
-                  headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json'
-                  },
                   observe: 'body'
                 }
               )
@@ -138,10 +123,6 @@ export class Service {
             try {
               await firstValueFrom(
                 this.http.delete<void>(this.baseurl + this.path.ASSET + id, {
-                  headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json'
-                  }
                 })
               );
             } catch (error) {
@@ -157,10 +138,6 @@ export class Service {
         try {
             const response = await firstValueFrom(
               this.http.get<Category[]>(this.baseurl + this.path.CATEGORY, { 
-              headers: {
-                  'Authorization': `Bearer ${this.token}`,
-                   'Content-Type': 'application/json'
-              },
               observe: 'response' })
             );
       
@@ -178,10 +155,6 @@ export class Service {
                   this.http.get<Category>(
                     this.baseurl + this.path.CATEGORY + "?category_id=" + id,
                     {
-                      headers: {
-                        'Authorization': `Bearer ${this.token}`,
-                        'Content-Type': 'application/json'
-                      },
                       observe: 'body'
                     }
                   )
@@ -201,10 +174,6 @@ export class Service {
         try {
             const response = await firstValueFrom(
               this.http.get<AssetType[]>(this.baseurl + this.path.TYPE, { 
-              headers: {
-                  'Authorization': `Bearer ${this.token}`,
-                   'Content-Type': 'application/json'
-              },
               observe: 'response' })
             );
       
@@ -222,10 +191,6 @@ export class Service {
               this.http.get<AssetType>(
                 this.baseurl + this.path.TYPE + id,
                 {
-                  headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json'
-                  },
                   observe: 'body'
                 }
               )
@@ -252,8 +217,9 @@ export class Service {
         });
             if (data.ok) {
                 const response = await data.json();
+                localStorage.setItem('token',response.access_token);
                 return response.access_token;
-            } else {
+              } else {
                 this.router.navigate(['/login']);
                 throw new Error(`Failed to authorize`);
             } 
@@ -265,10 +231,6 @@ export class Service {
         try {
           const response = await firstValueFrom(
             this.http.get<User[]>(this.baseurl + this.path.USER, { 
-            headers: {
-                'Authorization': `Bearer ${this.token}`,
-                 'Content-Type': 'application/json'
-            },
             observe: 'response' })
           );
     
@@ -287,10 +249,6 @@ export class Service {
             try {
                 const response = await firstValueFrom(
                 this.http.post(this.baseurl + this.path.USER, newUser, {
-                    headers: {
-                    'Authorization': `Bearer ${this.token}`,
-                    'Content-Type': 'application/json'
-                    },
                     observe: 'response',
                     responseType: 'text'
                 })
@@ -319,10 +277,6 @@ export class Service {
                     this.baseurl + this.path.USER + id,
                     user,
                     {
-                      headers: {
-                        'Authorization': `Bearer ${this.token}`,
-                        'Content-Type': 'application/json'
-                      },
                       observe: 'body'
                     }
                   )
