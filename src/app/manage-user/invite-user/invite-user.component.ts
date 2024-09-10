@@ -66,7 +66,6 @@ export class InviteUserComponent {
 
       if(emailRegex.test(email)) {
         this.password = this.inviteUserService.generatePassword();
-        console.log(this.password);
         this.newUser = {
           app_user_id: -1,
           app_user_email: email,
