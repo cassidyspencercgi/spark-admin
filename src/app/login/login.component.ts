@@ -23,18 +23,18 @@ export class LoginComponent {
   router: Router = inject(Router);
   readonly dialog = inject(MatDialog);
 
-  login_email: string = '';
-  login_password: string = '';
+  username: string = '';
+  password: string = '';
   
   newLogin: Login = {
-    "login_email": '',
-    "login_password": ''
+    "username": '',
+    "password": ''
   };
 
   onSubmit() {
     this.newLogin = {
-      login_email: this.login_email,
-      login_password: this.login_password
+      username: this.username,
+      password: this.password
     };
 
     this.service.authorizeUser(this.newLogin).then(jwt => {

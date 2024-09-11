@@ -5,12 +5,12 @@
         <div class="login-container">
             <div class="input-group">
                 <label for="username">Username</label>
-                <input id="email" type="text" [(ngModel)]="login_email" placeholder="Enter your username"/>
+                <input id="email" type="text" [(ngModel)]="username" placeholder="Enter your username"/>
             </div>
           
             <div class="input-group">
                 <label for="pass">Password</label>
-                <input id="password" type="password" [(ngModel)]="login_password" placeholder="Enter your password"/>
+                <input id="password" type="password" [(ngModel)]="password" placeholder="Enter your password"/>
             </div>
             
             <input type="submit" value="Sign in" (click)="onSubmit()"/>

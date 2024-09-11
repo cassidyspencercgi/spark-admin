@@ -1,6 +1,6 @@
 import { HttpRequest, HttpEvent, HttpHandlerFn, HttpEventType, HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Service } from './service';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
@@ -22,6 +22,38 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
             localStorage.setItem('token',refresh);
          }
        }
-     })
-   );
-};
+     }),
+     catchError(error => {
+      console.log(error);
+      if (error.status === 401 || error.status === 403) {
+         console.log('trying again');
+        const retryReq = req.clone({
+          setHeaders: {
+            'Authorization': `Bearer ${service.token || localStorage.getItem('token') || ''}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        return next(retryReq).pipe(
+          tap(event => {
+            console.log(event);
+            if (event.type === HttpEventType.Response) {
+              const refreshToken = event.headers.get('refresh_token');
+              if (refreshToken) {
+                service.token = refreshToken;
+                localStorage.setItem('token', refreshToken);
+              }
+            }
+          }),
+          catchError(error => {
+            console.log(error);
+            return throwError(() => error);
+          })
+        );
+      } else {
+         console.log(error)
+        return throwError(() => error);
+      }
+    })
+  );
+}
