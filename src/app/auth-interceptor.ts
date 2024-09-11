@@ -24,7 +24,6 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
        }
      }),
      catchError(error => {
-      console.log(error);
       if (error.status === 401 || error.status === 403) {
          console.log('trying again');
         const retryReq = req.clone({
@@ -36,7 +35,6 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
 
         return next(retryReq).pipe(
           tap(event => {
-            console.log(event);
             if (event.type === HttpEventType.Response) {
               const refreshToken = event.headers.get('refresh_token');
               if (refreshToken) {
@@ -46,12 +44,10 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
             }
           }),
           catchError(error => {
-            console.log(error);
             return throwError(() => error);
           })
         );
       } else {
-         console.log(error)
         return throwError(() => error);
       }
     })

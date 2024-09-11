@@ -81,6 +81,16 @@ export class CreateAssetComponent {
       let typeRegex = await this.typeService.getRegexById(typeId);   
 
       if(this.isRegexValid(this.addAssetForm.get('asset_url')?.value, typeRegex)) {
+
+        let allAssets = await this.service.getAssets();
+        let assetUrl = this.addAssetForm.get('asset_url')?.value;
+        let assetExists = allAssets.some(asset => asset.asset_url === assetUrl);
+
+        if (assetExists) {
+          this.openErrorDialog("Asset with this URL already exists!");
+          return;
+        }
+
         this.newAsset = {
           asset_id: -1,
           asset_name: this.addAssetForm.get('name')?.value,
