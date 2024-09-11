@@ -50,14 +50,14 @@ export class ManageUserComponent {
 
   applyFilter(): void {
     const filteredUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
     
     const filteredPendingUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
 
@@ -79,18 +79,18 @@ export class ManageUserComponent {
   onResend(user: User) {
     user.app_user_password = this.inviteUserService.generatePassword();
     this.inviteUserService.openSaveDialog(user.app_user_name, user.app_user_email, user.app_user_password, "New Login");
-    this.service.updateUser(user);
+    this.service.patchUser({"app_user_password": user.app_user_password}, user.app_user_id);
   }
   
   enableUser(user: User) {
     user.app_user_enabled = true;
-    this.service.updateUser(user)
+    this.service.patchUser({"app_user_enabled": user.app_user_enabled}, user.app_user_id)
     console.log("enabled");
   }
   
   disableUser(user: User) {
     user.app_user_enabled = false;
-    this.service.updateUser(user)
+    this.service.patchUser({"app_user_enabled": user.app_user_enabled}, user.app_user_id)
     console.log("disabled");
   }
 }
