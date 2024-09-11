@@ -1,0 +1,25 @@
+<head>
+  <title>Font Awesome Icons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+
+  <section class="user_info">
+    <p style="font-weight: bold;">Username:</p>
+    <p *ngIf="data?.email">{{ data.email }}</p>
+    <p style="font-weight: bold;">Password:</p>
+    <p *ngIf="data?.password">{{ data.password }}</p> 
+  </section>
+
+</mat-dialog-content>
+<mat-dialog-actions style="display: flex; justify-content: space-between;">
+  <a [href]="getMailtoLink()" >Send an email</a>
+  <button mat-stroked-button (click)="onClick()" [routerLink]="['/home/users']">Done</button>
+</mat-dialog-actions>
+
+<button mat-icon-button class="copy-button" (click)="copyEmail()" matTooltip="Copy email text" matTooltipPosition="above">
+  <i class="fa fa-copy"></i>
+</button>

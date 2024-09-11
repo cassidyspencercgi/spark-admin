@@ -17,7 +17,6 @@ form {
     padding: 20px;
 }
 
-/* Angular Material Form Field Styling */
 mat-form-field {
     width: 100%;
     margin-bottom: 20px;
@@ -28,9 +27,27 @@ mat-form-field mat-label {
     color: #333;
 }
 
-/* Button Styling */
 button[mat-stroked-button] {
     width: 100%;
     margin-top: 20px;
     text-align: center;
+}
+
+.user_info {
+    margin: 10px;
+}
+a {
+    font-family: Sans-Serif;
+    color: deepskyblue;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 20px;
+    display: inline-block;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+a:hover {
+    color: rgb(9, 163, 214);
+    border-bottom: 2px solid rgb(9, 163, 214);
 }

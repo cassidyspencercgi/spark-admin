@@ -1,7 +1,7 @@
 
     <section class="title">
     <h1>Manage Users</h1>
-        <button mat-stroked-button [routerLink]="['add']">Invite a new user</button>
+        <button mat-stroked-button [routerLink]="['invite']">Invite a new user</button>
     </section>
 
 <div>
@@ -11,7 +11,33 @@
         <mat-checkbox [(ngModel)]="disabledChecked" (change)="applyFilter()">Disabled</mat-checkbox>
     </section>
     <section class="tableSection">
+        <h2>Active Users</h2>
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="app_user_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let app_user">
+                    {{app_user['app_user_name']}}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="app_user_email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let app_user">{{app_user['app_user_email']}}</td>
+            </ng-container>    
+            
+            <ng-container matColumnDef="app_user_enabled">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let app_user"> 
+                    <mat-slide-toggle [(ngModel)]="app_user.app_user_enabled" (change)="onToggleUserStatus(app_user)">
+                        {{ app_user.app_user_enabled ? 'Enabled' : 'Disabled' }}
+                    </mat-slide-toggle></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+        <h2 class = "pendingUser">Pending Users</h2>
+        <table mat-table [dataSource]="dataSourcePending" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="app_user_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                 <td mat-cell *matCellDef="let app_user">
@@ -26,16 +52,23 @@
                 <ng-container matColumnDef="app_user_enabled">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let app_user"> 
-                        <ng-container *ngIf="app_user['app_user_enabled'] === true; else disabled">
-                        Enabled
-                      </ng-container>
-                      <ng-template #disabled>
-                        Disabled
-                      </ng-template></td>
+                      <mat-slide-toggle [(ngModel)]="app_user.app_user_enabled" (change)="onToggleUserStatus(app_user)">
+                        {{ app_user.app_user_enabled ? 'Enabled' : 'Disabled' }}
+                      </mat-slide-toggle>
+                    </td>
                 </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <ng-container matColumnDef="resend_email">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let app_user">
+                        <button class = "resend" (click)="onResend(app_user)">
+                            Resend Invite
+                        </button>
+                    </td>
+                </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsPending"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsPending;"></tr>
     </table>
     </section>
 
