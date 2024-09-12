@@ -142,7 +142,6 @@ export class CreateAssetComponent {
 
     dialogRef.afterClosed().subscribe(result => {
     });
-    this.addAssetForm.reset();
   }
 
   isRegexValid(assetUrl: string, assetRegex: string): boolean {

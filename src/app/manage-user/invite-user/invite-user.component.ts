@@ -111,7 +111,6 @@ export class InviteUserComponent {
 
   dialogRef.afterClosed().subscribe(result => {
   });
-  this.addUserForm.reset();
 }
 
 generatePassword(): void {
