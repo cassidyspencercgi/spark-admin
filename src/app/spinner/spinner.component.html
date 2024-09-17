@@ -1,0 +1,7 @@
+<div [ngClass]="{'blur-background': loader.loading | async}">
+  
+    <div *ngIf="loader.loading | async" class="spinner-container">
+      <mat-spinner class="custom-spinner"></mat-spinner>
+    </div>
+  </div>
+  
