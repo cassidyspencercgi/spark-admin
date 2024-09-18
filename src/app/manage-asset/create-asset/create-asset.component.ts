@@ -80,6 +80,13 @@ export class CreateAssetComponent {
       let typeId = await this.typeService.getIdbyName(this.addAssetForm.get('asset_type')?.value);
       let typeRegex = await this.typeService.getRegexById(typeId);   
 
+      const sensoryActivities = [8, 9, 10];
+
+      if (typeId !== 1 && sensoryActivities.includes(categoryId)) {
+        this.openErrorDialog("This category must be a YouTube video asset type.");
+        return;
+      }
+
       if(this.isRegexValid(this.addAssetForm.get('asset_url')?.value, typeRegex)) {
 
         let allAssets = await this.service.getAssets();
