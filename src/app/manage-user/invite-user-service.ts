@@ -27,11 +27,20 @@ import { MatTooltipModule } from "@angular/material/tooltip";
                   title: pTitle }
         })
       }
+
+      resetPasswordDialog(pName: String, pEmail: String, pPassword: String, pTitle: String): void {
+        const dialogRef = this.dialog.open(ResetPasswordDialog, {
+          data: { name: pName,
+                  email: pEmail,
+                  password: pPassword,
+                  title: pTitle }
+        })
+      }
   }
 
 
   @Component({
-    selector: 'save-user-dialog',
+    selector: 'save-password-dialog',
     templateUrl: 'save-user-dialog.html',
     styleUrl: 'save-user-dialog.css',
     standalone: true,
@@ -57,15 +66,55 @@ import { MatTooltipModule } from "@angular/material/tooltip";
       const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
                     `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in.`
                     + `\n\nThanks for trying out this app!`;
-      return `mailto:${this.data.email}?subject=${encodeURIComponent("Welcome to Spark!")}&body=${encodeURIComponent(body)}`;
+      return `mailto:${this.data.email}?subject=${encodeURIComponent("Welcome to SPARK!")}&body=${encodeURIComponent(body)}`;
     }
     onClick(): void {
       this.dialogRef.close();
     }
     copyEmail() {
         const body = `Hello ${this.data.name},\n\nI would like to invite you to join SPARK. Here is your username and password to login. `+
-        `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in`
+        `\n\n\tUsername: ${this.data.email}\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in.`
         + `\n\nThanks for trying out this app!`;
+        this.clipboard.copy(body);
+      }
+  }
+
+  @Component({
+    selector: 'reset-password-dialog',
+    templateUrl: 'reset-password-dialog.html',
+    styleUrl: 'save-user-dialog.css',
+    standalone: true,
+    imports: [
+      MatDialogTitle,
+      MatDialogContent,
+      MatDialogActions,
+      MatDialogClose,
+      MatButtonModule,
+      CommonModule,
+      NgIf,
+      RouterLink,
+      MatTooltipModule
+    ],
+  })
+  
+  export class ResetPasswordDialog {
+    readonly dialogRef = inject(MatDialogRef<SaveAssetDialog>);
+  
+    constructor(@Inject(MAT_DIALOG_DATA) public data: {name:String, email:String, password:String, title: String}, private clipboard: Clipboard){}
+  
+    getMailtoLink(): string {
+      const body = `Hello ${this.data.name},\n\nHere is your one-time password. `+
+                    `\n\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in.`
+                    + `\n\nThanks for your continued support of this app!`;
+      return `mailto:${this.data.email}?subject=${encodeURIComponent("SPARK - Reset Password")}&body=${encodeURIComponent(body)}`;
+    }
+    onClick(): void {
+      this.dialogRef.close();
+    }
+    copyEmail() {
+      const body = `Hello ${this.data.name},\n\nHere is your one-time password. `+
+                    `\n\n\tPassword: ${this.data.password}\n\nYou will be asked to change this password upon logging in.`
+                    + `\n\nThanks for your continued support of this app!`;
         this.clipboard.copy(body);
       }
   }

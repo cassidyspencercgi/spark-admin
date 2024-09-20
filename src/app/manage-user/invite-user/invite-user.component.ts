@@ -46,7 +46,7 @@ export class InviteUserComponent {
     "app_user_name": '',
     "app_user_type": 1,
     "app_user_root_user_id": 1,
-    "app_user_parent_passcode": '',
+    "app_user_parent_passcode": null,
     "app_user_reset_pwd_required": true,
     "app_user_enabled": true
   };
@@ -72,7 +72,7 @@ export class InviteUserComponent {
           app_user_name: this.addUserForm.get('app_user_name')?.value,
           app_user_reset_pwd_required: true,
           app_user_enabled: true,
-          app_user_parent_passcode: '1234',
+          app_user_parent_passcode: null,
           app_user_password: this.password,
           app_user_root_user_id: undefined, 
           app_user_type: 1
