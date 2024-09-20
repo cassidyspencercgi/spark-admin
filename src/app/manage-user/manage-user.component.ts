@@ -50,14 +50,14 @@ export class ManageUserComponent {
 
   applyFilter(): void {
     const filteredUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_reset_pwd_required === false && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_reset_pwd_required === false && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
     
     const filteredPendingUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_reset_pwd_required && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_reset_pwd_required && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
 
