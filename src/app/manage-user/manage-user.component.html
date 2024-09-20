@@ -33,6 +33,15 @@
                     </mat-slide-toggle></td>
             </ng-container>
 
+            <ng-container matColumnDef="resend_email">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let app_user">
+                    <button class = "resend" (click)="onResetPassword(app_user)">
+                        Reset Password
+                    </button>
+                </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
