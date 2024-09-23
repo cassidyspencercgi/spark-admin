@@ -33,7 +33,7 @@ export class ManageUserComponent {
   inviteUserService: InviteUserService = inject(InviteUserService);
   users: User[] = [];
 
-  displayedColumns: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled'];
+  displayedColumns: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled', 'resend_email'];
   displayedColumnsPending: string[] = ['app_user_name', 'app_user_email', 'app_user_enabled','resend_email'];
   dataSource = new MatTableDataSource<User>();
   dataSourcePending = new MatTableDataSource<User>();
@@ -50,14 +50,14 @@ export class ManageUserComponent {
 
   applyFilter(): void {
     const filteredUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu === false && user.app_user_type === 1;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_parent_passcode !== null && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_parent_passcode !== null && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
     
     const filteredPendingUsers = this.users.filter((user: User) => {
-      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
-      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_ftu && user.app_user_type === 1;
+      const enabledFilter = this.enabledChecked && user.app_user_enabled && user.app_user_parent_passcode === null && user.app_user_type === 1;
+      const disabledFilter = this.disabledChecked && !user.app_user_enabled && user.app_user_parent_passcode === null && user.app_user_type === 1;
       return enabledFilter || disabledFilter;
     });
 
@@ -80,6 +80,13 @@ export class ManageUserComponent {
     user.app_user_password = this.inviteUserService.generatePassword();
     this.inviteUserService.openSaveDialog(user.app_user_name, user.app_user_email, user.app_user_password, "New Login");
     this.service.patchUser({"app_user_password": user.app_user_password}, user.app_user_id);
+  }
+
+  onResetPassword(user: User) {
+    user.app_user_password = this.inviteUserService.generatePassword();
+    this.inviteUserService.resetPasswordDialog(user.app_user_name, user.app_user_email, user.app_user_password, "New Password");
+    this.service.patchUser({"app_user_password": user.app_user_password}, user.app_user_id);
+    this.service.patchUser({"app_user_reset_pwd_required": true}, user.app_user_id);
   }
   
   enableUser(user: User) {
