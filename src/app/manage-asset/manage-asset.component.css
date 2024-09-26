@@ -65,3 +65,8 @@ th {
     flex-direction: column;
     background-color: green;
 }
+
+.filterTable {
+    padding-left: 1rem;
+    padding-top: 25px;
+}
