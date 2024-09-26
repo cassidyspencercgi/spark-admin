@@ -10,6 +10,8 @@ import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialo
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { CategoryService } from '../category.service';
 import { TypeService } from '../type.service';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-manage-asset',
@@ -20,7 +22,9 @@ import { TypeService } from '../type.service';
             MatTableModule, 
             MatButtonModule, 
             MatSortModule,
-            MatSort
+            MatSort,
+            MatFormField,
+            MatInputModule
             ],
   templateUrl: './manage-asset.component.html',
   styleUrl: './manage-asset.component.css'
@@ -77,15 +81,19 @@ export class ManageAssetComponent {
   Promise.all([...categoryPromises.values(), ...typePromises.values()]).then(() => {
     this.dataSource.data = this.assets;
     this.table.renderRows();
-  });
-});
-
+     });
+    });
     }
 
     ngAfterViewInit(): void {
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
+    }
+
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
     }
   
     getCategoryName(id: number): string {

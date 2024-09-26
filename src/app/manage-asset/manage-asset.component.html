@@ -1,8 +1,12 @@
-<section>
-<h1>Assets</h1>
-    <button mat-stroked-button [routerLink]="['add']">Add a new asset</button>
-</section>
-
+      <h1>Assets</h1>
+      <section>
+      <mat-form-field class="filterTable">
+        <mat-label>Filter Table</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+      </mat-form-field>  
+    <button mat-stroked-button class="add-asset-button" [routerLink]="['add']">Add a new asset</button>
+</section>  
+  
 <section class = "tableSection">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="asset_name">
@@ -42,6 +46,9 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell">No assets matching the filter "{{input.value}}"</td>
+        </tr>
     </table>
 </section>
 
